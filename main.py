@@ -1,5 +1,6 @@
 from driver.Raspi_MotorHAT import Raspi_MotorHAT, Raspi_DCMotor
 from RobotMove import RobotMove
+from config import * # BLYNK_AUTH and etc
 
 import BlynkLib
 import time
@@ -19,8 +20,6 @@ atexit.register(turnOffMotors)
 # create a default object, no changes to I2C address or frequency
 # mh = Raspi_MotorHAT(addr=0x6F)
 
-BLYNK_AUTH = '7bfdcf324b734f38a6152147bba4da58'
-
 # Initialize Blynk
 blynk = BlynkLib.Blynk(BLYNK_AUTH)
 
@@ -37,14 +36,3 @@ def my_write_handler(value):
     RM.setY(value)
 
 blynk.run()
-
-# set the speed to start, from 0 (off) to 255 (max speed)
-motorRight.run(Raspi_MotorHAT.FORWARD)
-# motorLeft.run(Raspi_MotorHAT.FORWARD)
-# motorRight.run(Raspi_MotorHAT.BACKWARD)
-motorLeft.run(Raspi_MotorHAT.BACKWARD)
-
-motorRight.setSpeed(50)
-motorLeft.setSpeed(50)
-
-time.sleep(10)
