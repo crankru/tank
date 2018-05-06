@@ -1,5 +1,6 @@
-from flask import Flask, render_template, Response
+from flask import Flask, render_template, Response, jsonify, request
 from VideoStream import VideoStream
+from RobotMove import RobotMove
 
 app = Flask(__name__)
 
@@ -21,7 +22,22 @@ def video_feed():
 
 @app.route('/action')
 def action():
-    return Response('test')
+    action = request.args.get('action')
+    rm = RobotMove()
+
+    if action == 'stop':
+        rm.stop()
+    elif action == 'move':
+        x = int(request.args.get('x'))
+        y = int(request.args.get('y'))
+        print(x, y)
+        rm.setX(x)
+        rm.setY(y)
+    else:
+        print('Error: Unknown action "{}"'.format(action))
+
+    res = {'res': True}
+    return jsonify(res)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

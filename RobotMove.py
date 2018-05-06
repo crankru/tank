@@ -10,9 +10,16 @@ class RobotMove:
         self.minSpeed = 30
 
         self.zeroPosition = self._y = self._x = 0
-        self.maxPosition = 100
+        # self.maxPosition = 100
+        self.maxPosition = 50
 
-        self.reversTurnValue = 70
+        self.reversTurnValue = 35
+
+    def __del__(self):
+        self.mh.getMotor(1).run(Raspi_MotorHAT.RELEASE)
+        self.mh.getMotor(2).run(Raspi_MotorHAT.RELEASE)
+        self.mh.getMotor(3).run(Raspi_MotorHAT.RELEASE)
+        self.mh.getMotor(4).run(Raspi_MotorHAT.RELEASE)
 
     def setX(self, value):
         # print('X: {}'.format(value))
