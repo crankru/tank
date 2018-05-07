@@ -31,8 +31,12 @@ def action():
         x = int(request.args.get('x'))
         y = int(request.args.get('y'))
         print(x, y)
-        rm.setX(x)
-        rm.setY(y)
+
+        if x: 
+            rm.setX(x)
+
+        if y: 
+            rm.setY(y)
     else:
         print('Error: Unknown action "{}"'.format(action))
 
