@@ -72,6 +72,7 @@ class VideoStream:
 
             # (self.ret, self.frame) = self.stream.read()
             self.get_frame()
+            time.sleep(0)
 
     def get_stream(self):
         while True:

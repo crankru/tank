@@ -1,2 +1,8 @@
 flask
+
+# websocket
+flask-socketio
+eventlet
+
+# Blynk
 # blynk-library-python

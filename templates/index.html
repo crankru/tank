@@ -9,16 +9,17 @@
     </head>
     <body>
         <div class="container">
-            <div><img src="{{ url_for('video_feed') }}"></div>
+            <div id="zone1" class="text-center"><img src="{{ url_for('video_feed') }}" class="img-fluid"></div>
+            <div id="zone2" style="height: 200px; background-color: #efefef;">&nbsp;</div>
         </div>
-        <div id="zone_joystick" style="width: 100%; height: 200px; background-color: #efefef;">&nbsp;</div>
 
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
 
         <script src="{{ url_for('static', filename='libs/nipplejs/dist/nipplejs.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/main.js') }}?1"></script>
+        <script src="{{ url_for('static', filename='js/main.js') }}?2"></script>
     </body>
 </html>
