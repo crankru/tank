@@ -33,7 +33,7 @@ class RobotControl {
         // $.getJSON('/action', nipple, function(res) {
         //     console.log(res);
         // });
-        console.log(data);
+        // console.log(data);
 
         $.get('/action', data, function(data) {
             // console.log(data);
@@ -45,17 +45,21 @@ class RobotControl {
         // this.sendXY();
         console.log('reset dataSend', this.dataSend);
 
-        this.sendXY();
+        // this.sendXY();
     }
 
     move(nipple) {
-        // console.log(nipple.distance, nipple.angle.degree)
-        var x = Math.round(nipple.distance * Math.cos(nipple.angle.degree));
-        var y = Math.round(nipple.distance * Math.sin(nipple.angle.degree));
+        // var x = Math.round(nipple.distance * Math.cos(nipple.angle.degree));
+        // var y = Math.round(nipple.distance * Math.sin(nipple.angle.degree));
+        var x = Math.round(nipple.instance.frontPosition.x);
+        var y = Math.round(nipple.instance.frontPosition.y * -1);
+
+        // console.log();
 
         if(x == this.x && y == this.y) {
             return;
         } else {
+            console.log(x, y);
             this.x = x;
             this.y = y;
         }

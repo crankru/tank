@@ -3,6 +3,7 @@ from VideoStream import VideoStream
 from RobotMove import RobotMove
 
 app = Flask(__name__)
+RM = RobotMove()
 
 @app.route('/')
 def index():
@@ -23,20 +24,17 @@ def video_feed():
 @app.route('/action')
 def action():
     action = request.args.get('action')
-    rm = RobotMove()
 
     if action == 'stop':
-        rm.stop()
+        RM.stop()
     elif action == 'move':
-        x = int(request.args.get('x'))
-        y = int(request.args.get('y'))
-        print(x, y)
+        x = int(request.args.get('x', 0))
+        y = int(request.args.get('y', 0))
+        # print(x, y)
 
-        if x: 
-            rm.setX(x)
+        RM.setX(x)
+        RM.setY(y)
 
-        if y: 
-            rm.setY(y)
     else:
         print('Error: Unknown action "{}"'.format(action))
 
