@@ -1,6 +1,8 @@
 $(document).ready(function() {
     var options = {
         zone: document.getElementById('zone_joystick'),
+        color: '#000',
+        mode: 'dynamic',
     };
     var manager = nipplejs.create(options);
     var rc = new RobotControl();
@@ -30,21 +32,20 @@ class RobotControl {
             y: this.y,
             action: 'move',
         }
-        // $.getJSON('/action', nipple, function(res) {
-        //     console.log(res);
-        // });
+        $.getJSON('/action', data, function(res) {
+            console.log(res);
+        });
         // console.log(data);
 
-        $.get('/action', data, function(data) {
-            // console.log(data);
-        });
+        // $.get('/action', data, function(data) {
+        //     // console.log(data);
+        // });
     }
 
     resetDataFlag() {
         this.dataSend = false;
         // this.sendXY();
-        console.log('reset dataSend', this.dataSend);
-
+        // console.log('reset dataSend', this.dataSend);
         // this.sendXY();
     }
 

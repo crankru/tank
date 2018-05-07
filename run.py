@@ -2,24 +2,29 @@ from flask import Flask, render_template, Response, jsonify, request
 from VideoStream import VideoStream
 from RobotMove import RobotMove
 
+import time
+
 app = Flask(__name__)
-RM = RobotMove()
+
+@app.before_first_request
+def strat_video_stream():
+    global VS, RM
+    RM = RobotMove()
+
+    print('Start video stream...')
+    VS = VideoStream(RM)
+    VS.start()
+    time.sleep(2)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
-
-def gen(vs):
-    while True:
-        frame = vs.get_frame()
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n{}\r\n\r\n'.format(frame))
+    return render_template('index.html')      
 
 @app.route('/video_feed')
 def video_feed():
-    # vs = VideoStream()
-    # return Response(gen(vs), mimetype='multipart/x-mixed-replace; boundary=frame')
-    return Response('', mimetype='multipart/x-mixed-replace; boundary=frame')
+    global VS
+    return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    # return Response('', mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/action')
 def action():
@@ -38,8 +43,7 @@ def action():
     else:
         print('Error: Unknown action "{}"'.format(action))
 
-    res = {'res': True}
-    return jsonify(res)
+    return jsonify({'res': True})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', debug=True, threaded=True)

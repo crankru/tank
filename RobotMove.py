@@ -15,11 +15,17 @@ class RobotMove:
 
         self.reversTurnValue = 35
 
+        self.speedLeft = 0
+        self.speedRight = 0
+
     def __del__(self):
         self.mh.getMotor(1).run(Raspi_MotorHAT.RELEASE)
         self.mh.getMotor(2).run(Raspi_MotorHAT.RELEASE)
         self.mh.getMotor(3).run(Raspi_MotorHAT.RELEASE)
         self.mh.getMotor(4).run(Raspi_MotorHAT.RELEASE)
+
+    def getSpeed(self):
+        return self.speedLeft, self.speedRight
 
     def setX(self, value):
         # print('X: {}'.format(value))
@@ -47,6 +53,8 @@ class RobotMove:
         # print('STOP')
         self.motorLeft.run(Raspi_MotorHAT.RELEASE)
         self.motorRight.run(Raspi_MotorHAT.RELEASE)
+        self.speedLeft = 0
+        self.speedRight = 0
 
     def run(self):
         speedLeft = self.calcSpeed(self._y)
@@ -86,6 +94,8 @@ class RobotMove:
 
         self.motorLeft.setSpeed(speedLeft)
         self.motorRight.setSpeed(speedRight)
+        self.speedLeft = speedLeft
+        self.speedRight = speedRight
 
     def updateMode(self):
         if self._x == self.zeroPosition and self._y == self.zeroPosition:
