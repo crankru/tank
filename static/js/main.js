@@ -68,8 +68,6 @@ class RobotControl {
     }
 
     move(nipple) {
-        // var x = Math.round(nipple.distance * Math.cos(nipple.angle.degree));
-        // var y = Math.round(nipple.distance * Math.sin(nipple.angle.degree));
         var x = Math.round(nipple.instance.frontPosition.x);
         var y = Math.round(nipple.instance.frontPosition.y * -1);
 
@@ -89,6 +87,7 @@ class RobotControl {
             action: 'move',
         }
 
+        // TODO set update delay
         this.socket.emit('action', data);
 
         // console.log(this.x, this.y);

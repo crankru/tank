@@ -16,10 +16,10 @@ def strat_video_stream():
     global VS, RM
     RM = RobotMove()
 
-    # print('Start video stream...')
-    # VS = VideoStream(RM)
-    # VS.start()
-    # time.sleep(2)
+    print('Start video stream...')
+    VS = VideoStream(RM)
+    VS.start()
+    time.sleep(2)
 
 @app.route('/')
 def index():
@@ -28,8 +28,8 @@ def index():
 @app.route('/video_feed')
 def video_feed():
     global VS
-    # return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
-    return Response('', mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    # return Response('', mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @socketio.on('connect', namespace='/socket')
 def action():
@@ -46,11 +46,11 @@ def action(message):
     if action == 'stop':
         RM.stop()
         x = y = 0
-        print('stop')
+        # print('stop')
     elif action == 'move':
         x = int(message.get('x', 0))
         y = int(message.get('y', 0))
-        print(x, y)
+        # print(x, y)
 
         RM.setX(x)
         RM.setY(y)
@@ -61,24 +61,24 @@ def action(message):
 
     emit('my response', {'res': True, 'data': 'OK', 'params': {'x': x, 'y': y}})
 
-@app.route('/action')
-def action():
-    action = request.args.get('action')
+# @app.route('/action')
+# def action():
+#     action = request.args.get('action')
 
-    if action == 'stop':
-        RM.stop()
-    elif action == 'move':
-        x = int(request.args.get('x', 0))
-        y = int(request.args.get('y', 0))
-        # print(x, y)
+#     if action == 'stop':
+#         RM.stop()
+#     elif action == 'move':
+#         x = int(request.args.get('x', 0))
+#         y = int(request.args.get('y', 0))
+#         # print(x, y)
 
-        RM.setX(x)
-        RM.setY(y)
+#         RM.setX(x)
+#         RM.setY(y)
 
-    else:
-        print('Error: Unknown action "{}"'.format(action))
+#     else:
+#         print('Error: Unknown action "{}"'.format(action))
 
-    return jsonify({'res': True})
+#     return jsonify({'res': True})
 
 if __name__ == '__main__':
     # app.run(host='0.0.0.0', debug=True, threaded=True)
