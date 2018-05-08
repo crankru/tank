@@ -23,7 +23,7 @@ def strat_video_stream():
 
 @app.route('/')
 def index():
-    return render_template('index.html')      
+    return render_template('index.html', mtime=time.time())      
 
 @app.route('/video_feed')
 def video_feed():
@@ -35,31 +35,38 @@ def video_feed():
 def action():
     emit('my response', {'data': 'WS connected'})
 
-@socketio.on('disconnect', namespace='/socket')
-def test_disconnect():
-    print('WS disconnected')
+# @socketio.on('disconnect', namespace='/socket')
+# def test_disconnect():
+#     print('WS disconnected')
 
 @socketio.on('action', namespace='/socket')
 def action(message):
     action = message.get('action')
+    x = int(message.get('x', 0))
+    y = int(message.get('y', 0))
 
     if action == 'stop':
         RM.stop()
-        x = y = 0
         # print('stop')
     elif action == 'move':
-        x = int(message.get('x', 0))
-        y = int(message.get('y', 0))
         # print(x, y)
-
         RM.setX(x)
         RM.setY(y)
+        # pass
 
     else:
         print('Error: Unknown action "{}"'.format(action))
         emit('my response', {'res': False, 'data': 'Unknown action'})
 
     emit('my response', {'res': True, 'data': 'OK', 'params': {'x': x, 'y': y}})
+
+@socketio.on('camera_control', namespace='/socket')
+def camera_control(message):
+    pass
+
+@app.route('/test')
+def test():
+    return render_template('test.html')
 
 # @app.route('/action')
 # def action():

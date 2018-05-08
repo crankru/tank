@@ -32,6 +32,9 @@ class VideoStream:
         ret, jpeg = cv.imencode('.jpg', self.frame)
         return jpeg.tobytes()
 
+    def take_photo(self):
+        img = self.get_image()
+
     def get_frame(self):
         self.ret, self.frame = self.stream.read()
 
