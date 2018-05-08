@@ -1,11 +1,31 @@
 class RobotControl {
     constructor(socket) {
+        this.socket = socket;
+
         this.repeatTimeout = 300;
         this.x = 0;
         this.y = 0;
         this.dataSend = false;
-        
-        this.socket = socket;
+
+        this.bindEvents();
+        this.listenEvents();
+    }
+
+    bindEvents() {
+        var $this = this;
+
+        $('#btn-move-stop').on('click', function() {
+            $this.stop();
+        });
+    }
+
+    listenEvents() {
+        this.socket.on('move', function(msg) {
+            if(msg.params.x && msg.params.y) {
+                // console.log(msg.params);
+                document.getElementById('div-xy').innerHTML = 'X: ' + msg.params.x + ' Y: ' + msg.params.y;
+            }
+        });
     }
 
     sendXY() {
@@ -52,7 +72,7 @@ class RobotControl {
         }
 
         // TODO set update delay
-        this.socket.emit('action', data);
+        this.socket.emit('move', data);
 
         // console.log(this.x, this.y);
 
@@ -71,9 +91,8 @@ class RobotControl {
     }
 
     stop() {
-        // $.getJSON('/action', {action: 'stop'}, function(res) {
-        //     console.log('STOP');
-        // });
-        this.socket.emit('action', {action: 'stop'})
+        // $.getJSON('/action', {action: 'stop'}, function(res) {});
+        this.socket.emit('move', {action: 'stop'});
+        console.log('STOP');
     }
 }

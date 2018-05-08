@@ -61,12 +61,17 @@ class VideoStream:
     def get_fps(start_time, frame_count):
         pass
 
+    def get_status(self):
+        return not self.stopped
+
     def stop(self):
         self.stopped = True
 
     def start(self):
         t = Thread(target=self.update, args=())
         t.start()
+
+        return self.get_status()
 
     def update(self):
         while True:

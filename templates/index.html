@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title></title>
+        <title>Tank control</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -23,12 +23,15 @@
                     <button type="botton" class="btn btn-primary">left</button>
                     <button type="botton" class="btn btn-primary">right</button><br>
                     <button type="botton" class="btn btn-primary">up</button><br>
+                    <button id="btn-move-stop" type="botton" class="btn btn-danger">stop</button><br>
 
-                    <button id="btn-camera-mode" type="botton" class="btn btn-primary">camera off</button> 
-                    <button id="btn-take-photo" type="botton" class="btn btn-primary">take photo</button><br>
+                    <button id="btn-camera-stop" type="botton" class="btn btn-primary">camera off</button> 
+                    <button id="btn-camera-photo" type="botton" class="btn btn-primary">take photo</button><br>
                 </div>
             </div>
         </div>
+
+        <script>var socketNamespace = '{{ socketNamespace }}';</script>
 
         <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>

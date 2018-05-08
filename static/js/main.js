@@ -1,13 +1,8 @@
 $(function() {
 
-    var socket = io.connect('http://' + document.domain + ':' + location.port + '/socket');
-    socket.on('my response', function(msg) {
+    var socket = io.connect('http://' + document.domain + ':' + location.port + '/robot');
+    socket.on('connection', function(msg) {
         console.log(msg.data);
-
-        if(msg.params) {
-            // console.log(msg.params);
-            document.getElementById('div-xy').innerHTML = 'X: ' + msg.params.x + ' Y: ' + msg.params.y;
-        }
     });
 
     // var options1 = {
