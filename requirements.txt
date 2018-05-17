@@ -1,4 +1,5 @@
 flask
+uwsgi
 
 # websocket
 flask-socketio
