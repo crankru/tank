@@ -8,6 +8,7 @@ class RobotControl {
         this.speed = 0;
         this.angle = 0;
         this.dataSend = false;
+        this.direction = {};
 
         this.bindEvents();
         this.listenEvents();
@@ -36,6 +37,7 @@ class RobotControl {
             y: this.y,
             speed: this.speed,
             angle: this.angle,
+            direction: this.direction,
             action: 'move',
         }
 
@@ -68,7 +70,8 @@ class RobotControl {
         var x = Math.round(nipple.instance.frontPosition.x);
         var y = Math.round(nipple.instance.frontPosition.y * -1);
 
-        console.log(nipple.angle, Math.sin(nipple.angle.radian), Math.cos(nipple.angle.radian));
+        console.log(nipple);
+        // console.log(nipple.angle, Math.sin(nipple.angle.radian), Math.cos(nipple.angle.radian));
 
         if(x == this.x && y == this.y) {
             return;
@@ -78,6 +81,7 @@ class RobotControl {
             this.y = y;
             this.speed = nipple.distance;
             this.angle = nipple.angle.radian;
+            this.direction = nipple.direction;
         }
 
         this.sendXY();

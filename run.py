@@ -63,14 +63,18 @@ def move(message):
     action = message.get('action')
     x = int(message.get('x', 0))
     y = int(message.get('y', 0))
+    speed = int(message.get('speed', 0))
+    radian = float(message.get('angle', 0))
+    direction = message.get('direction', {})
 
     if action == 'stop':
         RM.stop()
         # print('stop')
     elif action == 'move':
         # print(x, y)
-        RM.setX(x)
-        RM.setY(y)
+        # RM.setX(x)
+        # RM.setY(y)
+        RM.setSpeedAndRadian(speed, radian, direction)
 
     else:
         print('Error: Unknown action "{}"'.format(action))

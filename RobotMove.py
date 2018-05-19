@@ -1,5 +1,7 @@
 from driver.Raspi_MotorHAT import Raspi_MotorHAT, Raspi_DCMotor
 
+import math
+
 class RobotMove:
     def __init__(self):
         self.mh = Raspi_MotorHAT(addr=0x6F)
@@ -17,6 +19,8 @@ class RobotMove:
 
         self.speedLeft = 0
         self.speedRight = 0
+        self.forvardLeft = True
+        self.forvardRight = True
         self.radian = 0
 
     def __del__(self):
@@ -38,8 +42,69 @@ class RobotMove:
         self._y = int(value)
         self.updateMode()
 
-    def setSpeedAndRadian(self, speed, radian):
+    def setSpeedAndRadian(self, speed, radian, direction):
         self.radian = radian
+
+        if speed == 0:
+            self.stop()
+            return
+
+        cos = math.cos(radian)
+        sin = math.sin(radian)
+        directionX = direction.get('x')
+        directionY = direction.get('y')
+        directionAngle = direction.get('angle')
+
+        if directionY == u'up':
+            self.forvardLeft = True
+            self.forvardRight = True
+        else:
+            self.forvardLeft = False
+            self.forvardRight = False
+
+        if directionX == u'right':
+            self.speedLeft = self.calcSpeed(speed)
+            self.speedRight = self.calcSpeed(cos * speed)
+        else:
+            self.speedLeft = self.calcSpeed(sin * speed)
+            self.speedRight = self.calcSpeed(speed)
+
+        if directionAngle == u'right':
+            self.forvardLeft = True
+            self.forvardRight = False
+        elif directionAngle == u'left':
+            self.forvardLeft = False
+            self.forvardRight = True
+
+        if directionAngle == u'right' or directionAngle == u'left':
+            self.speedLeft = self.speedRight = self.calcSpeed(speed)
+
+            # if self.directionY == u'down':
+            #     self.forvardLeft = not self.forvardLeft
+            #     self.forvardRight = not self.forvardRight
+
+        # print(speed, radian, cos, sin, direction)
+        print(self.speedLeft, self.forvardLeft, self.speedRight, self.forvardRight)
+
+        self.move()
+
+    def move(self):
+        if self.speedLeft == 0 and self.speedRight == 0:
+            self.stop()
+            return
+
+        self.motorLeft.setSpeed(self.speedLeft)
+        self.motorRight.setSpeed(self.speedRight)
+
+        if self.forvardLeft:
+            self.motorLeft.run(Raspi_MotorHAT.FORWARD)
+        else:
+            self.motorLeft.run(Raspi_MotorHAT.BACKWARD)
+        
+        if self.forvardRight:
+            self.motorRight.run(Raspi_MotorHAT.FORWARD)
+        else:
+            self.motorRight.run(Raspi_MotorHAT.BACKWARD)
 
     def calcSpeed(self, value):
         if value == 0:
