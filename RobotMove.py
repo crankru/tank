@@ -79,9 +79,9 @@ class RobotMove:
         if directionAngle == u'right' or directionAngle == u'left':
             self.speedLeft = self.speedRight = self.calcSpeed(speed)
 
-            # if self.directionY == u'down':
-            #     self.forvardLeft = not self.forvardLeft
-            #     self.forvardRight = not self.forvardRight
+            if directionY == u'down':
+                self.forvardLeft = not self.forvardLeft
+                self.forvardRight = not self.forvardRight
 
         # print(speed, radian, cos, sin, direction)
         print(self.speedLeft, self.forvardLeft, self.speedRight, self.forvardRight)
