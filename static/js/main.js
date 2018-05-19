@@ -1,6 +1,6 @@
 $(function() {
 
-    var socket = io.connect('http://' + document.domain + ':' + location.port + '/robot');
+    var socket = io.connect('http://' + document.domain + ':' + location.port + socketNamespace);
     socket.on('connection', function(msg) {
         console.log(msg.data);
     });

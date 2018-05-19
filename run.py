@@ -12,15 +12,16 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = SOCKET_SECRET
 socketio = SocketIO(app)
 
+RM = RobotMove()
+
 @app.before_first_request
 def strat_video_stream():
     global VS, RM
-    RM = RobotMove()
 
     print('Start video stream...')
     VS = VideoStream(RM)
-    VS.start()
-    time.sleep(2)
+    # VS.start()
+    # time.sleep(2)
 
 @app.route('/')
 def index():
@@ -31,13 +32,13 @@ def index():
     print('cam status', cam_status)
     socketio.emit('camera', {'status': cam_status}, namespace=SOCKET_NAMESPACE)
 
-    return render_template('index.html', mtime=time.time())      
+    return render_template('index.html', mtime=time.time(), socket_namespace=SOCKET_NAMESPACE)      
 
 @app.route('/video_feed')
 def video_feed():
     global VS
-    return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
-    # return Response('', mimetype='multipart/x-mixed-replace; boundary=frame')
+    # return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response('', mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/test')
 def test():
@@ -58,6 +59,7 @@ def action():
 # TODO update control algoritm
 @socketio.on('move', namespace=SOCKET_NAMESPACE)
 def move(message):
+    # print(message)
     action = message.get('action')
     x = int(message.get('x', 0))
     y = int(message.get('y', 0))
@@ -69,7 +71,6 @@ def move(message):
         # print(x, y)
         RM.setX(x)
         RM.setY(y)
-        # pass
 
     else:
         print('Error: Unknown action "{}"'.format(action))

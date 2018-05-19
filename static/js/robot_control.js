@@ -5,6 +5,8 @@ class RobotControl {
         this.repeatTimeout = 300;
         this.x = 0;
         this.y = 0;
+        this.speed = 0;
+        this.angle = 0;
         this.dataSend = false;
 
         this.bindEvents();
@@ -32,19 +34,30 @@ class RobotControl {
         var data = {
             x: this.x,
             y: this.y,
+            speed: this.speed,
+            angle: this.angle,
             action: 'move',
         }
-        // $.getJSON('/action', data, function(res) {
-        //     console.log(res);
-        // });
 
-        // this.socket.emit('action', data);
+        // console.log(data);
+
+        // TODO set update delay
+        // if(this.dataSend == true) {
+        //     var $this = this;
+            
+        //     setTimeout(function() {
+        //        $this.resetDataFlag();
+        //     }, this.repeatTimeout);
+
+        //     return;
+        // }
+
+        this.socket.emit('move', data);
+        this.dataSend = true;
     }
 
     resetDataFlag() {
-        if(this.dataSend == false) {
-            return;
-        } else {
+        if(this.dataSend == true) {
             this.dataSend = false;
             this.sendXY();
         }
@@ -55,7 +68,7 @@ class RobotControl {
         var x = Math.round(nipple.instance.frontPosition.x);
         var y = Math.round(nipple.instance.frontPosition.y * -1);
 
-        // console.log();
+        console.log(nipple.angle, Math.sin(nipple.angle.radian), Math.cos(nipple.angle.radian));
 
         if(x == this.x && y == this.y) {
             return;
@@ -63,31 +76,11 @@ class RobotControl {
             // console.log(x, y);
             this.x = x;
             this.y = y;
+            this.speed = nipple.distance;
+            this.angle = nipple.angle.radian;
         }
 
-        var data = {
-            x: this.x,
-            y: this.y,
-            action: 'move',
-        }
-
-        // TODO set update delay
-        this.socket.emit('move', data);
-
-        // console.log(this.x, this.y);
-
-        // if(this.dataSend == true) {
-        //     var $this = this;
-            
-        //     // setTimeout(function() {
-        //     //    $this.resetDataFlag();
-        //     // }, this.repeatTimeout);
-
-        //     return;
-        // }
-
-        // this.sendXY();
-        // this.dataSend = true;
+        this.sendXY();
     }
 
     stop() {

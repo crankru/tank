@@ -17,6 +17,7 @@ class RobotMove:
 
         self.speedLeft = 0
         self.speedRight = 0
+        self.radian = 0
 
     def __del__(self):
         self.mh.getMotor(1).run(Raspi_MotorHAT.RELEASE)
@@ -36,6 +37,9 @@ class RobotMove:
         # print('Y: {}'.format(value))
         self._y = int(value)
         self.updateMode()
+
+    def setSpeedAndRadian(self, speed, radian):
+        self.radian = radian
 
     def calcSpeed(self, value):
         if value == 0:
