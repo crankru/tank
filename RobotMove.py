@@ -55,6 +55,7 @@ class RobotMove:
         directionY = direction.get('y')
         directionAngle = direction.get('angle')
 
+        # move
         if directionY == u'up':
             self.forvardLeft = True
             self.forvardRight = True
@@ -62,29 +63,33 @@ class RobotMove:
             self.forvardLeft = False
             self.forvardRight = False
 
+        # soft turn
         if directionX == u'right':
             self.speedLeft = self.calcSpeed(speed)
-            self.speedRight = self.calcSpeed(cos * speed)
-        else:
+            self.speedRight = self.calcSpeed(sin * speed)
+        elif directionX == u'left':
             self.speedLeft = self.calcSpeed(sin * speed)
             self.speedRight = self.calcSpeed(speed)
 
-        if directionAngle == u'right':
+        reversTurnSin = 0.5
+
+        # reverse turn
+        if directionAngle == u'right' and abs(sin) <= reversTurnSin:
             self.forvardLeft = True
             self.forvardRight = False
-        elif directionAngle == u'left':
+        elif directionAngle == u'left' and abs(sin) <= reversTurnSin:
             self.forvardLeft = False
             self.forvardRight = True
 
-        if directionAngle == u'right' or directionAngle == u'left':
+        if (directionAngle == u'right' or directionAngle == u'left') and abs(sin) <= reversTurnSin:
             self.speedLeft = self.speedRight = self.calcSpeed(speed)
 
             if directionY == u'down':
                 self.forvardLeft = not self.forvardLeft
                 self.forvardRight = not self.forvardRight
 
-        # print(speed, radian, cos, sin, direction)
-        print(self.speedLeft, self.forvardLeft, self.speedRight, self.forvardRight)
+        # print(speed, radian, sin, cos)
+        # print('L: {} ({}); R: {} ({})'.format(self.speedLeft, self.forvardLeft, self.speedRight, self.forvardRight))
 
         self.move()
 
@@ -113,7 +118,7 @@ class RobotMove:
         perc = float(abs(value)) / float(self.maxPosition)
         speed = int(self.maxSpeed * perc)
         # print(float(abs(value)) / float(self.maxPosition))
-        # print(perc, speed)
+        # print(value, perc, speed)
         if speed < self.minSpeed:
             speed = self.minSpeed
         return speed
