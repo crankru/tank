@@ -71,7 +71,7 @@ class RobotControl {
         var y = Math.round(nipple.instance.frontPosition.y * -1);
 
         // console.log(nipple);
-        console.log(nipple.angle, Math.sin(nipple.angle.radian), Math.cos(nipple.angle.radian));
+        // console.log(nipple.angle, Math.sin(nipple.angle.radian), Math.cos(nipple.angle.radian));
 
         if(x == this.x && y == this.y) {
             return;

@@ -6,11 +6,22 @@
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
 
     </head>
     <body>
         <div class="container">
-            <div id="j_zone1" class="text-center" style="display: block;"><img src="{{ url_for('video_feed') }}" class="img-fluid"></div>
+            <div id="j_zone1" class="text-center" style="display: block;">
+                <div id="battery" class="float-right">
+                    7.5v 
+                    <span class="fa-layers fa-fw">
+                        <i class="fas fa-battery-full fa-2x"></i>
+                        <span class="fa-layers-text fa-inverse">100%</span>
+                    </span>
+                </div>
+                <img src="{{ url_for('video_feed') }}" class="img-fluid">
+            </div>
             <div class="row">
                 <div class="col-sm">
                     <div id="j_zone2" class="j_zone2">

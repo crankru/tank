@@ -1,9 +1,10 @@
 from flask import Flask, render_template, Response, jsonify, request
 from flask_socketio import SocketIO, emit
 
-from VideoStream import VideoStream
-from RobotMove import RobotMove
 from config import *
+from project.video import VideoStream
+from project.move import RobotMove
+from project.battery import BatteryControl
 
 import time
 
@@ -13,6 +14,7 @@ app.config['SECRET_KEY'] = SOCKET_SECRET
 socketio = SocketIO(app)
 
 RM = RobotMove()
+BATTERY = BatteryControl()
 
 @app.before_first_request
 def strat_video_stream():

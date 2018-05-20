@@ -3,6 +3,13 @@ body {
     -webkit-user-select: none;
 }
 
+/* .battery {
+    position: relative;
+    display: block;
+    top: 0;
+    right: 0;
+} */
+
 .j_zone2 {
     position: relative;
     background: silver;
