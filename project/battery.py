@@ -7,11 +7,12 @@ class BatteryControl:
             baudrate=115200, 
             timeout=1,
             parity=serial.PARITY_NONE,
-            stopbits=serial.STOPBITS_ONE,
-            bytesize=serial.EIGHTBITS
+            stopbits=1,
+            bytesize=8,
+            write_timeout=5
         )
 
-        self.max_voltage = 8
+        self.max_voltage = 8.5
         self.min_voltage = 6
 
     def __del__(self):
@@ -27,4 +28,19 @@ class BatteryControl:
         pass
 
     def getVoltage(self):
-        pass
+        self.port.write('Off')
+        print(self.port.read(8))
+
+if __name__ == '__main__':
+    import time
+    bc = BatteryControl()
+    # print(bc.port.readline())
+    
+    while True:
+        print(bc.port.readline())
+        print('read')
+        time.sleep(1)
+        bc.port.write(b'\r\n')
+        print('write1')
+        bc.port.write(b'Get\r\n')
+        print('write2')
