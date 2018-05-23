@@ -3,12 +3,13 @@ import serial
 class BatteryControl:
     def __init__(self):
         self.port = serial.Serial(
-            '/dev/ttyAMA0', 
+            # '/dev/ttyAMA0', 
+            '/dev/ttyS0',
             baudrate=115200, 
             timeout=1,
             parity=serial.PARITY_NONE,
-            stopbits=1,
-            bytesize=8,
+            stopbits=serial.STOPBITS_ONE,
+            bytesize=serial.EIGHTBITS,
             write_timeout=5
         )
 
@@ -19,10 +20,12 @@ class BatteryControl:
         self.port.close()
 
     def write(self, data):
-        self.port.write(data)
+        return self.port.write(data)
 
     def read(self):
-        return self.port.readline()
+        cnt = self.port.inWaiting()
+        res = self.port.read(cnt)
+        return res
 
     def getBatteryPerc(self):
         pass
@@ -35,12 +38,21 @@ if __name__ == '__main__':
     import time
     bc = BatteryControl()
     # print(bc.port.readline())
-    
-    while True:
-        print(bc.port.readline())
-        print('read')
-        time.sleep(1)
-        bc.port.write(b'\r\n')
-        print('write1')
-        bc.port.write(b'Get\r\n')
-        print('write2')
+
+    print('Start test')
+    print('Serial open: {}'.format(bc.port.is_open))
+
+    bc.write(b'Get\n')
+    # time.sleep(0.3)
+    print('RES: {}'.format(bc.read()))
+    bc.write(b'On\n')
+    print('RES: {}'.format(bc.read()))
+    bc.write(b'Off\r\n')
+    print('RES: {}'.format(bc.read()))
+    bc.write(b'Start\n')
+    print('RES: {}'.format(bc.read()))
+    bc.write(b'Stop\n')
+    print('RES: {}'.format(bc.read()))
+    print('RES: {}'.format(bc.port.read(10)))
+
+    # print('RES: {}'.format(bc.port.readline()))
