@@ -20,20 +20,20 @@ $(function() {
         // position: {left: '50%', top: '50%'}
     };
 
-    var manager1 = nipplejs.create(options1);
+    // var manager1 = nipplejs.create(options1);
     var manager2 = nipplejs.create(options2);
 
     var rc = new RobotControl(socket);
     var sc = new ServoControl(socket);
     var camera = new CameraControl(socket);
 
-    manager1.on('move', function(evt, nipple) {
-        sc.move(nipple);
-    });
+    // manager1.on('move', function(evt, nipple) {
+    //     sc.move(nipple);
+    // });
 
-    manager1.on('end', function(evt, nipple) {
-        sc.stop();
-    });
+    // manager1.on('end', function(evt, nipple) {
+    //     sc.stop();
+    // });
 
     manager2.on('move', function(evt, nipple) {
         // console.log(nipple);

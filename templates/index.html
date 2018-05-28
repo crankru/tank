@@ -6,6 +6,7 @@
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?{{ mtime }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap-slider/dist/css/bootstrap-slider.min.css') }}">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
 
@@ -13,14 +14,24 @@
     <body>
         <div class="container">
             <div id="j_zone1" class="j_zone1" class="row text-center">
-                <div id="battery" class="float-right col-sm">
+                <!-- <div id="battery" class="float-right col-sm">
                     7.5v 
                     <span class="fa-layers fa-fw">
                         <i class="fas fa-battery-full fa-2x"></i>
                         <span class="fa-layers-text fa-inverse">100%</span>
                     </span>
+                </div> -->
+                <div class="col-1">
+                    <input id="servo_y" data-slider-id='servoSliderY' type="text" data-slider-min="300" data-slider-max="600" data-slider-step="1" data-slider-value="500" data-slider-orientation="vertical" />
                 </div>
-                <img src="{{ url_for('video_feed') }}" class="img-fluid">
+                <div class="col-11">
+                    <img src="{{ url_for('video_feed') }}" class="img-fluid">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <input id="servo_x" data-slider-id='servoSliderX' type="text" data-slider-min="150" data-slider-max="600" data-slider-step="1" data-slider-value="400"/>
+                </div>
             </div>
             <div class="row">
                 <div class="col-sm">
@@ -38,6 +49,7 @@
 
                     <button id="btn-camera-stop" type="botton" class="btn btn-primary">camera off</button> 
                     <button id="btn-camera-photo" type="botton" class="btn btn-primary">take photo</button><br>
+                    <button id="btn-camera-center" type="botton" class="btn btn-primary">center</button><br>
                 </div>
             </div>
         </div>
@@ -51,6 +63,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
 
         <script src="{{ url_for('static', filename='libs/nipplejs/dist/nipplejs.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='libs/bootstrap-slider/dist/bootstrap-slider.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/camera_control.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='js/robot_control.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='js/servo_control.js') }}?{{ mtime }}"></script>

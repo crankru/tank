@@ -3,30 +3,42 @@ import time
 from threading import Thread
 import atexit
 
+from picamera import PiCamera
+from picamera.array import PiRGBArray
+
+
 class VideoStream:
-    def __init__(self, rm):
-        height = 480
-        width = 320
+    def __init__(self):
+        # mode = 
+        height = 320
+        width = 280
+        resolution = (height, width)
         fps = 25
-        time.sleep(2)
+        # time.sleep(2)
 
-        self.stream = cv.VideoCapture(0)
-        self.stream.set(cv.cv.CV_CAP_PROP_FRAME_WIDTH, 480)
-        self.stream.set(cv.cv.CV_CAP_PROP_FRAME_HEIGHT, 320)
-        # self.stream.set(5, framerate)
-        # self.stream.set(cv.cv.CV_CAP_PROP_FPS, fps)
+        self.camera = PiCamera()
+        self.camera.resolution = resolution
+        self.camera.framerate = 32
+        self.rawCapture = PiRGBArray(self.camera, size=resolution)
+        self.stream = self.camera.capture_continuous(self.rawCapture, format='bgr', use_video_port=True)
 
-        self.cv_width = self.stream.get(cv.cv.CV_CAP_PROP_FRAME_WIDTH)
-        self.cv_height = self.stream.get(cv.cv.CV_CAP_PROP_FRAME_HEIGHT)
+        # self.stream = cv.VideoCapture(0)
+        # self.stream.set(cv.cv.CV_CAP_PROP_FRAME_WIDTH, resolution[0])
+        # self.stream.set(cv.cv.CV_CAP_PROP_FRAME_HEIGHT, resolution[1])
+        # self.cv_width = self.stream.get(cv.cv.CV_CAP_PROP_FRAME_WIDTH)
+        # self.cv_height = self.stream.get(cv.cv.CV_CAP_PROP_FRAME_HEIGHT)
 
         self.stopped = False
-        # self.ret, self.frame = None
+        self.frame = None
+        # self.ret, 
 
-        self.rm = rm # RobotMove class
+        # self.rm = rm # RobotMove class
 
     def __del__(self):
         self.stream.release()
         cv.destroyAllWindows()
+
+        self.stop()
 
     def get_image(self):
         ret, jpeg = cv.imencode('.jpg', self.frame)
@@ -39,7 +51,7 @@ class VideoStream:
         self.ret, self.frame = self.stream.read()
 
         # frame = cv.flip(frame, 1)
-        speedLeft, speedRight = self.rm.getSpeed()
+        # speedLeft, speedRight = self.rm.getSpeed()
 
         h = int(self.cv_height  / 2)
         w = int(self.cv_width  / 2)
@@ -58,29 +70,46 @@ class VideoStream:
         # return self.get_image(frame)
         # return frame
 
+    def modify_frame(self):
+        pass
+
     def get_fps(start_time, frame_count):
         pass
 
     def get_status(self):
         return not self.stopped
 
+    def read(self):
+        return self.frame
+
     def stop(self):
         self.stopped = True
 
-    def start(self):
-        t = Thread(target=self.update, args=())
-        t.start()
+        self.stream.close()
+        self.rawCapture.close()
+        self.camera.close()
 
-        return self.get_status()
+    def start(self):
+        t = Thread(target=self.update, args=()).start()
+        # t.start()
+        return self
+        # return self.get_status()
 
     def update(self):
-        while True:
+        # while True:
+        #     if self.stopped:
+        #         return
+
+        #     # (self.ret, self.frame) = self.stream.read()
+        #     self.get_frame()
+        #     time.sleep(0)
+
+        for f in self.stream:
+            self.frame = f.array
+            self.rawCapture.truncate(0)
+
             if self.stopped:
                 return
-
-            # (self.ret, self.frame) = self.stream.read()
-            self.get_frame()
-            time.sleep(0)
 
     def get_stream(self):
         while True:

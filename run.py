@@ -23,9 +23,10 @@ def strat_video_stream():
     global VS, RM
 
     print('Start video stream...')
-    VS = VideoStream(RM)
+    # VS = VideoStream(RM)
+    VS = VideoStream()
     # VS.start()
-    # time.sleep(2)
+    time.sleep(2)
 
 @app.route('/')
 def index():
@@ -41,8 +42,8 @@ def index():
 @app.route('/video_feed')
 def video_feed():
     global VS
-    # return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
-    return Response('', mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    # return Response('', mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/test')
 def test():
@@ -97,6 +98,8 @@ def servo(message):
         SC.stop(1)
     elif action == 'move':
         SC.move(x, y)
+    elif action == 'center':
+        SC.center()
     else:
         print('Error: Unknown action "{}"'.format(action))
         emit('servo', {'res': False, 'data': 'Unknown action'})
