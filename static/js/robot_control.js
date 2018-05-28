@@ -1,4 +1,5 @@
-class RobotControl {
+class RobotControl 
+{
     constructor(socket) {
         this.socket = socket;
 

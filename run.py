@@ -4,6 +4,7 @@ from flask_socketio import SocketIO, emit
 from config import *
 from project.video import VideoStream
 from project.move import RobotMove
+from project.servo import ServoControl
 from project.battery import BatteryControl
 
 import time
@@ -14,6 +15,7 @@ app.config['SECRET_KEY'] = SOCKET_SECRET
 socketio = SocketIO(app)
 
 RM = RobotMove()
+SC = ServoControl()
 BATTERY = BatteryControl()
 
 @app.before_first_request
@@ -83,6 +85,23 @@ def move(message):
         emit('move', {'res': False, 'data': 'Unknown action'})
 
     emit('move', {'res': True, 'data': 'OK', 'params': {'x': x, 'y': y}})
+
+@socketio.on('servo', namespace=SOCKET_NAMESPACE)
+def servo(message):
+    action = message.get('action')
+    x = int(message.get('x', 0))
+    y = int(message.get('y', 0))
+
+    if action ==  'stop':
+        SC.stop(0)
+        SC.stop(1)
+    elif action == 'move':
+        SC.move(x, y)
+    else:
+        print('Error: Unknown action "{}"'.format(action))
+        emit('servo', {'res': False, 'data': 'Unknown action'})
+
+    emit('servo', {'res': True})
 
 @socketio.on('camera', namespace=SOCKET_NAMESPACE)
 def camera(message):
