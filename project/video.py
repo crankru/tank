@@ -10,8 +10,8 @@ from picamera.array import PiRGBArray
 class VideoStream:
     def __init__(self):
         # mode = 
-        height = 320
-        width = 280
+        height = 480
+        width = 320
         resolution = (height, width)
         fps = 25
         # time.sleep(2)
@@ -27,6 +27,9 @@ class VideoStream:
         # self.stream.set(cv.cv.CV_CAP_PROP_FRAME_HEIGHT, resolution[1])
         # self.cv_width = self.stream.get(cv.cv.CV_CAP_PROP_FRAME_WIDTH)
         # self.cv_height = self.stream.get(cv.cv.CV_CAP_PROP_FRAME_HEIGHT)
+
+        self.cv_width = self.camera.resolution[0]
+        self.cv_height = self.camera.resolution[1]
 
         self.stopped = False
         self.frame = None
@@ -47,8 +50,8 @@ class VideoStream:
     def take_photo(self):
         img = self.get_image()
 
-    def get_frame(self):
-        self.ret, self.frame = self.stream.read()
+    def modify_frame(self):
+        # self.ret, self.frame = self.stream.read()
 
         # frame = cv.flip(frame, 1)
         # speedLeft, speedRight = self.rm.getSpeed()
@@ -64,17 +67,11 @@ class VideoStream:
 
         # fps = self.cap.get(cv.cv.CV_CAP_PROP_FPS)
         # cv.putText(frame, 'FPS: {}'.format(fps), (5, 20), cv.FONT_HERSHEY_SIMPLEX, 0.3, (0, 255, 0), 1)
-        cv_speed_text = 'Speed: L{} R{}'.format(speedLeft, speedRight)
-        cv.putText(self.frame, cv_speed_text, (5, 20), cv.FONT_HERSHEY_SIMPLEX, 0.3, (0, 255, 0), 1)
+        # cv_speed_text = 'Speed: L{} R{}'.format(speedLeft, speedRight)
+        # cv.putText(self.frame, cv_speed_text, (5, 20), cv.FONT_HERSHEY_SIMPLEX, 0.3, (0, 255, 0), 1)
 
         # return self.get_image(frame)
         # return frame
-
-    def modify_frame(self):
-        pass
-
-    def get_fps(start_time, frame_count):
-        pass
 
     def get_status(self):
         return not self.stopped
@@ -106,7 +103,10 @@ class VideoStream:
 
         for f in self.stream:
             self.frame = f.array
+            self.modify_frame()
             self.rawCapture.truncate(0)
+
+            time.sleep(0)
 
             if self.stopped:
                 return

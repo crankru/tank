@@ -13,6 +13,9 @@ class ServoControl:
         self.minSpeed = 150  # Min pulse length out of 4096
         self.maxSpeed = 600  # Max pulse length out of 4096
 
+        # self.setX(self.x)
+        # self.setY(self.y)
+
     def __del__(self):
         self.pwm.setAllPWM(0, 0)
 
@@ -27,7 +30,7 @@ class ServoControl:
     def move(self, x, y):
         # speedX = self.calcSpeed(x)
         # speedY = self.calcSpeed(y)
-        print(x, y)
+        # print(x, y)
 
         if x != self.x:
             self.setX(x)

@@ -89,7 +89,7 @@ class RobotMove:
                 self.forvardRight = not self.forvardRight
 
         # print(speed, radian, sin, cos)
-        print('L: {} ({}); R: {} ({})'.format(self.speedLeft, self.forvardLeft, self.speedRight, self.forvardRight))
+        # print('L: {} ({}); R: {} ({})'.format(self.speedLeft, self.forvardLeft, self.speedRight, self.forvardRight))
 
         self.move()
 

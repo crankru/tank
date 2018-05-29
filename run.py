@@ -2,7 +2,7 @@ from flask import Flask, render_template, Response, jsonify, request
 from flask_socketio import SocketIO, emit
 
 from config import *
-from project.video import VideoStream
+# from project.video import VideoStream
 from project.move import RobotMove
 from project.servo import ServoControl
 from project.battery import BatteryControl
@@ -18,32 +18,31 @@ RM = RobotMove()
 SC = ServoControl()
 BATTERY = BatteryControl()
 
-@app.before_first_request
-def strat_video_stream():
-    global VS, RM
-
-    print('Start video stream...')
-    # VS = VideoStream(RM)
-    VS = VideoStream()
-    # VS.start()
-    time.sleep(2)
+# @app.before_first_request
+# def strat_video_stream():
+#     global VS
+#     print('Start video stream...')
+#     # VS = VideoStream(RM)
+#     VS = VideoStream()
+#     # VS.start()
+#     time.sleep(2)
 
 @app.route('/')
 def index():
-    global VS
+    # global VS
 
     # send camera status
-    cam_status = VS.get_status()
-    print('cam status', cam_status)
-    socketio.emit('camera', {'status': cam_status}, namespace=SOCKET_NAMESPACE)
+    # cam_status = VS.get_status()
+    # print('cam status', cam_status)
+    # socketio.emit('camera', {'status': cam_status}, namespace=SOCKET_NAMESPACE)
 
     return render_template('index.html', mtime=time.time(), socket_namespace=SOCKET_NAMESPACE)      
 
-@app.route('/video_feed')
-def video_feed():
-    global VS
-    return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
-    # return Response('', mimetype='multipart/x-mixed-replace; boundary=frame')
+# @app.route('/video_feed')
+# def video_feed():
+#     global VS
+#     # return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
+#     return Response('', mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/test')
 def test():
