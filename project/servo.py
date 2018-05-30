@@ -1,20 +1,21 @@
 from driver.Raspi_MotorHAT import Raspi_MotorHAT, Raspi_DCMotor
 from driver.Raspi_PWM_Servo_Driver import PWM
 
+import time
+
 class ServoControl:
     def __init__(self):
         self.pwm = PWM(0x6F)
         self.pwm.setPWMFreq(60)
 
-        self.x = 400
-        self.y = 500
+        self.x = self.centerX = 400
+        self.y = self.centerY = 500
 
         self.maxPosition = 50
         self.minSpeed = 150  # Min pulse length out of 4096
         self.maxSpeed = 600  # Max pulse length out of 4096
 
-        # self.setX(self.x)
-        # self.setY(self.y)
+        self.center()
 
     def __del__(self):
         self.pwm.setAllPWM(0, 0)
@@ -45,8 +46,9 @@ class ServoControl:
         self.pwm.setPWM(channel, 0, 0)
 
     def center(self):
-        self.pwm.setPWM(0, 0, 400)
-        self.pwm.setPWM(1, 0, 500)
+        self.pwm.setPWM(0, 0, self.centerX)
+        time.sleep(1)
+        self.pwm.setPWM(1, 0, self.centerY)
 
     def calcSpeed(self, value):
         if value == 0:

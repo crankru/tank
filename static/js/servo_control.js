@@ -2,8 +2,8 @@ class ServoControl
 {
     constructor(socket) {
         this.socket = socket;
-        this.x = 400;
-        this.y = 500;
+        this.x = this.centerX = 400;
+        this.y = this.centerY = 500;
 
         //  = '#servoSliderY';
         //  = '#servoSliderX';
@@ -13,6 +13,7 @@ class ServoControl
         });
 
         this.sliderX = $('#servo_x').slider({
+            reversed : true,
             formatter: function(value) { return value }
         });
 
@@ -48,7 +49,7 @@ class ServoControl
 
     listenEvents() {
         this.socket.on('servo', function(msg) {
-            console.log(msg);
+            // console.log(msg);
         });
     }
 
@@ -74,7 +75,8 @@ class ServoControl
     center() {
         console.log('center camera');
         this.socket.emit('servo', {action: 'center'});
-        // this.sliderX.value = 400;
-        // this.sliderY.value = 500;
+        // console.log(this.centerX, this.centerY);
+        this.sliderX.slider('setValue', this.centerX);
+        this.sliderY.slider('setValue', this.centerY);
     }
 }
