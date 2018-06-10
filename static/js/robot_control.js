@@ -25,8 +25,8 @@ class RobotControl
 
     listenEvents() {
         this.socket.on('move', function(msg) {
-            if(msg.params.x && msg.params.y) {
-                // console.log(msg.params);
+            // console.log(msg);
+            if(msg.params) {
                 document.getElementById('div-xy').innerHTML = 'X: ' + msg.params.x + ' Y: ' + msg.params.y;
             }
         });
