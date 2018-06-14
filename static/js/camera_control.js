@@ -1,10 +1,13 @@
-class CameraControl {
+class CameraControl 
+{
     constructor(socket) {
         this.socket = socket;
         this.cameraOn = false;
         
         this.bindEvents();
         this.listenEvents();
+
+        this.activeBtn = $('#btn-camera-stop');
     }
 
     bindEvents() {
@@ -21,10 +24,10 @@ class CameraControl {
     listenEvents() {
         var $this = this;
         this.socket.on('camera', function(msg) {
-            if(msg.cameraOn == true) {
-                $this.setCameraStatus(true);
-            } else {
-                $this.setCameraStatus(false);
+            console.log('camera: ', msg);
+
+            if(msg.status) {
+                $this.setCameraStatus(msg.status);
             }
         });
     }
@@ -33,9 +36,11 @@ class CameraControl {
         if(on == true) {
             console.log('camera on');
             this.cameraOn = true;
+            this.activeBtn.text('On');
         } else {
             console.log('camera off');
             this.cameraOn = false;
+            this.activeBtn.text('Off');
         }
     }
 

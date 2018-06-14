@@ -12,7 +12,7 @@ import time
 # Set this variable to "threading", "eventlet" or "gevent" to test the
 # different async modes, or leave it set to None for the application to choose
 # the best option based on installed packages.
-async_mode = 'threading' #None
+async_mode = 'threading'
 
 app = Flask(__name__)
 # secret key from config.py
@@ -26,20 +26,20 @@ SC = ServoControl()
 @app.before_first_request
 def strat_video_stream():
     global VS
-    print('Start video stream...')
+    # print('Start video stream...')
     # VS = VideoStream(RM)
     VS = VideoStream()
-    VS.start()
-    time.sleep(2)
+    # VS.start()
+    # time.sleep(2)
 
 @app.route('/')
 def index():
     # global VS
 
     # send camera status
-    # cam_status = VS.get_status()
+    cam_status = VS.get_status()
     # print('cam status', cam_status)
-    # socketio.emit('camera', {'status': cam_status}, namespace=SOCKET_NAMESPACE)
+    socketio.emit('camera', {'status': cam_status}, namespace=SOCKET_NAMESPACE)
 
     return render_template('index.html', mtime=time.time(), socket_namespace=SOCKET_NAMESPACE)      
 
@@ -112,7 +112,15 @@ def servo(message):
 
 @socketio.on('camera', namespace=SOCKET_NAMESPACE)
 def camera(message):
-    print(message)
+    print('camera msg: ', message)
+
+    if message.get('active') == True:
+        VS.start()
+    else:
+        VS.stop()
+
+    status = VS.get_status()
+    emit('camera', {'res': True, 'status': status})
 
 if __name__ == '__main__':
     # app.run(host='0.0.0.0', debug=True, threaded=True)
