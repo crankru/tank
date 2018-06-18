@@ -12,7 +12,7 @@ import time
 # Set this variable to "threading", "eventlet" or "gevent" to test the
 # different async modes, or leave it set to None for the application to choose
 # the best option based on installed packages.
-async_mode = 'threading'
+async_mode = 'eventlet'
 
 app = Flask(__name__)
 # secret key from config.py
@@ -116,6 +116,7 @@ def camera(message):
 
     if message.get('active') == True:
         VS.start()
+        time.sleep(2)
     else:
         VS.stop()
 

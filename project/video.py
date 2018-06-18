@@ -33,6 +33,7 @@ class VideoStream:
 
         self.stopped = False
         self.frame = None
+        self.thread = None
         # self.ret, 
 
         # self.rm = rm # RobotMove class
@@ -87,10 +88,11 @@ class VideoStream:
         self.camera.close()
 
     def start(self):
-        t = Thread(target=self.update, args=()).start()
+        if not self.thread:
+            self.thread = Thread(target=self.update, args=()).start()
+
         # t.start()
         return self
-        # return self.get_status()
 
     def update(self):
         # while True:
