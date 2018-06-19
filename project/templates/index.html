@@ -25,7 +25,7 @@
                     <input id="servo_y" data-slider-id='servoSliderY' type="text" data-slider-min="400" data-slider-max="600" data-slider-step="1" data-slider-value="500" data-slider-orientation="vertical" />
                 </div>
                 <div class="col-11">
-                    {#<img src="http://192.168.1.123:5500/video_feed" class="img-fluid">#}
+                    <!-- <img src="http://192.168.1.123:5500/video_feed" class="img-fluid"> -->
                     <img src="{{ url_for('video_feed') }}" class="img-fluid">
                 </div>
             </div>
@@ -46,11 +46,21 @@
                     <button type="botton" class="btn btn-primary">left</button>
                     <button type="botton" class="btn btn-primary">right</button><br>
                     <button type="botton" class="btn btn-primary">up</button><br> -->
-                    <button id="btn-move-stop" type="botton" class="btn btn-danger"><i class="fas fa-stop-circle"></i></button><br>
+                    <button id="btn-move-stop" type="botton" class="btn btn-danger" title="Stop moving">
+                        <i class="fas fa-stop-circle"></i>
+                    </button><br>
 
-                    <button id="btn-camera-stop" type="botton" class="btn btn-primary"><i class="fas fa-video"></i></button> 
-                    <button id="btn-camera-photo" type="botton" class="btn btn-primary"><i class="fas fa-camera"></i></button><br>
-                    <button id="btn-camera-center" type="botton" class="btn btn-primary"><i class="fas fa-angle-down"></i></button><br>
+                    <button id="btn-camera-stop" type="botton" class="btn btn-primary" title="Camera on/off">
+                        <i class="fas fa-video"></i>
+                    </button> 
+
+                    <button id="btn-camera-photo" type="botton" class="btn btn-primary" title="Take photo">
+                        <i class="fas fa-camera"></i>
+                    </button><br>
+
+                    <button id="btn-camera-center" type="botton" class="btn btn-primary" title="Camera to center">
+                        <i class="fas fa-angle-down"></i>
+                    </button><br>
                 </div>
             </div>
         </div>

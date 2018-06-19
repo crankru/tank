@@ -4,7 +4,7 @@ from flask_socketio import emit
 from project import app, socketio
 import config
 
-from video import VideoStream
+from video import VideoStream#, Camera
 from move import RobotMove
 from servo import ServoControl
 
@@ -12,7 +12,7 @@ import time
 
 RM = RobotMove()
 SC = ServoControl()
-# # BATTERY = BatteryControl()
+# BATTERY = BatteryControl()
 
 @app.before_first_request
 def strat_video_stream():
@@ -22,35 +22,34 @@ def strat_video_stream():
 
 @app.route('/')
 def index():
-    # global VS
-
     # send camera status
     if VS:
         cam_status = VS.get_status()
         # print('cam status', cam_status)
         socketio.emit('camera', {'status': cam_status}, namespace=config.SOCKET_NAMESPACE)
 
-    return render_template('index.html', mtime=time.time(), socket_namespace=config.SOCKET_NAMESPACE)      
+    return render_template('index.html', mtime=time.time(), socket_namespace=config.SOCKET_NAMESPACE)
+
+# def gen(camera):
+#     while True:
+#         frame = camera.get_frame()
+#         yield (b'--frame\r\n'
+#             b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
 
 @app.route('/video_feed')
 def video_feed():
-    global VS
     return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
-    # return Response('', mimetype='multipart/x-mixed-replace; boundary=frame')
-
-@app.route('/test')
-def test():
-    return render_template('test.html')
-
+    # return Response(gen(Camera()), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 ### Socket actions
 
 @socketio.on('connect', namespace=config.SOCKET_NAMESPACE)
-def action():
-    emit('connection', {'data': 'WS connected'})
+def connection():
+    emit('connection', {'data': 'connected'})
 
 # @socketio.on('disconnect', namespace='/socket')
-# def test_disconnect():
+# def disconnect():
 #     print('WS disconnected')
 
 @socketio.on('move', namespace=config.SOCKET_NAMESPACE)
@@ -99,7 +98,6 @@ def servo(message):
 
 @socketio.on('camera', namespace=config.SOCKET_NAMESPACE)
 def camera(message):
-    global VS
     print('camera msg: ', message)
 
     if message.get('active') == True:
