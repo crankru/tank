@@ -36,11 +36,11 @@ class CameraControl
         if(on == true) {
             console.log('camera on');
             this.cameraOn = true;
-            this.activeBtn.text('On');
+            this.activeBtn.text('<i class="fas fa-video"></i>');
         } else {
             console.log('camera off');
             this.cameraOn = false;
-            this.activeBtn.text('Off');
+            this.activeBtn.html('<i class="fas fa-video-slash"></i>');
         }
     }
 
