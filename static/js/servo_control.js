@@ -9,11 +9,13 @@ class ServoControl
         //  = '#servoSliderX';
 
         this.sliderY = $('#servo_y').slider({
+            tooltip: 'show',
             formatter: function(value) { return value }
         });
 
         this.sliderX = $('#servo_x').slider({
             reversed : true,
+            tooltip: 'show',
             formatter: function(value) { return value }
         });
 
@@ -27,23 +29,34 @@ class ServoControl
             $this.center();
         });
 
-        this.sliderX.on('slide', function(evt) {
-            var x = evt.value;
-            if($this.x != x) {
-                $this.x = x;
-                var data = {action: 'move', x: $this.x, y: $this.y};
-                $this.socket.emit('servo', data);
+        // slider moving events
+        this.sliderX.on('slide', function(e) {
+            if($this.x != e.value) {
+                $this.x = e.value;
+                $this.move();
             }
         });
 
-        this.sliderY.on('slide', function(evt) {
-            var y = evt.value;
-            if($this.y != y) {
-                $this.y = y;
-                var data = {action: 'move', x: $this.x, y: $this.y};
-                $this.socket.emit('servo', data);
+        this.sliderY.on('slide', function(e) {
+            if($this.y != e.value) {
+                $this.y = e.value;
+                $this.move();
             }
-            // console.log(evt.value);
+        });
+
+        // slider change by click events
+        this.sliderX.on('change', function(e) {
+            if($this.x != e.value.newValue) {
+                $this.x = e.value.newValue;
+                $this.move();
+            }
+        });
+
+        this.sliderY.on('change', function(e) {
+            if($this.y != e.value.newValue) {
+                $this.y = e.value.newValue;
+                $this.move();
+            }
         });
     }
 
@@ -73,10 +86,15 @@ class ServoControl
     }
 
     center() {
-        console.log('center camera');
-        this.socket.emit('servo', {action: 'center'});
+        // console.log('center camera');
         // console.log(this.centerX, this.centerY);
+        this.socket.emit('servo', {action: 'center'});
         this.sliderX.slider('setValue', this.centerX);
         this.sliderY.slider('setValue', this.centerY);
+    }
+
+    move() {
+        var data = {action: 'move', x: this.x, y: this.y};
+        this.socket.emit('servo', data);
     }
 }

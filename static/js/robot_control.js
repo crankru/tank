@@ -91,6 +91,6 @@ class RobotControl
     stop() {
         // $.getJSON('/action', {action: 'stop'}, function(res) {});
         this.socket.emit('move', {action: 'stop'});
-        console.log('STOP');
+        // console.log('STOP');
     }
 }

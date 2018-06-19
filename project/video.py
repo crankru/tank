@@ -14,13 +14,8 @@ class VideoStream:
         width = 320
         resolution = (height, width)
         fps = 25
-        # time.sleep(2)
 
-        self.camera = PiCamera()
-        self.camera.resolution = resolution
-        self.camera.framerate = 32
-        self.rawCapture = PiRGBArray(self.camera, size=resolution)
-        self.stream = self.camera.capture_continuous(self.rawCapture, format='bgr', use_video_port=True)
+        self.init_camera(resolution)
 
         # self.stream = cv.VideoCapture(0)
         # self.stream.set(cv.cv.CV_CAP_PROP_FRAME_WIDTH, resolution[0])
@@ -44,7 +39,26 @@ class VideoStream:
 
         self.stop()
 
+    def init_camera(self, resolution):
+        try:
+            self.camera = PiCamera()
+        except Exception:
+            print('Camera initialization error')
+            return None
+
+        self.camera.resolution = resolution
+        self.camera.framerate = 32
+        self.rawCapture = PiRGBArray(self.camera, size=resolution)
+        self.stream = self.camera.capture_continuous(self.rawCapture, format='bgr', use_video_port=True)
+
+
     def get_image(self):
+        # if self.frame:
+        #     ret, jpeg = cv.imencode('.jpg', self.frame)
+        #     return jpeg.tobytes()
+        # else:
+        #     return None
+
         ret, jpeg = cv.imencode('.jpg', self.frame)
         return jpeg.tobytes()
 
@@ -92,6 +106,7 @@ class VideoStream:
             self.thread = Thread(target=self.update, args=()).start()
 
         # t.start()
+        time.sleep(2)
         return self
 
     def update(self):
@@ -105,10 +120,10 @@ class VideoStream:
 
         for f in self.stream:
             self.frame = f.array
-            self.modify_frame()
+            # self.modify_frame()
             self.rawCapture.truncate(0)
 
-            time.sleep(0)
+            # time.sleep(0)
 
             if self.stopped:
                 return
@@ -116,29 +131,30 @@ class VideoStream:
     def get_stream(self):
         while True:
             # frame = self.get_frame()
-            frame = self.get_image()
+            image = self.get_image()
+            # time.sleep(0.01)
             yield(b'--frame\r\n'
-                b'Content-Type: image/jpeg\r\n\r\n{}\r\n\r\n'.format(frame))
+                b'Content-Type: image/jpeg\r\n\r\n{}\r\n\r\n'.format(image))
 
-    def run(self):
-        while(True):
-            # Capture frame-by-frame
-            ret, frame = self.stream.read()
-            # frame = cv.flip(frame, 1)
+    # def run(self):
+    #     while(True):
+    #         # Capture frame-by-frame
+    #         ret, frame = self.stream.read()
+    #         # frame = cv.flip(frame, 1)
 
-            h = int(self.cv_height  / 2)
-            w = int(self.cv_width  / 2)
+    #         h = int(self.cv_height  / 2)
+    #         w = int(self.cv_width  / 2)
 
-            cv.line(frame, (0, h), (480, h), (0, 255, 0), 1)
-            cv.line(frame, (w, 0), (w, 320), (0, 255, 0), 1)
+    #         cv.line(frame, (0, h), (480, h), (0, 255, 0), 1)
+    #         cv.line(frame, (w, 0), (w, 320), (0, 255, 0), 1)
 
-            cv_text = '{}x{}'.format(self.cv_width, self.cv_height)
-            cv.putText(frame, cv_text, (5, 10), cv.FONT_HERSHEY_SIMPLEX, 0.3, (0, 255, 0), 1)
+    #         cv_text = '{}x{}'.format(self.cv_width, self.cv_height)
+    #         cv.putText(frame, cv_text, (5, 10), cv.FONT_HERSHEY_SIMPLEX, 0.3, (0, 255, 0), 1)
 
-            # fps = self.stream.get(cv.cv.CV_CAP_PROP_FPS)
-            # cv.putText(frame, 'FPS: {}'.format(fps), (5, 20), cv.FONT_HERSHEY_SIMPLEX, 0.3, (0, 255, 0), 1)
+    #         # fps = self.stream.get(cv.cv.CV_CAP_PROP_FPS)
+    #         # cv.putText(frame, 'FPS: {}'.format(fps), (5, 20), cv.FONT_HERSHEY_SIMPLEX, 0.3, (0, 255, 0), 1)
 
-            cv.imshow('frame', frame)
+    #         cv.imshow('frame', frame)
 
-            if cv.waitKey(1) & 0xFF == ord('q'):
-                break
+    #         if cv.waitKey(1) & 0xFF == ord('q'):
+    #             break
