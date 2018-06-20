@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_socketio import SocketIO
-import config
+# from Queue import Queue
 
 import eventlet
 eventlet.monkey_patch()
@@ -9,8 +9,12 @@ eventlet.monkey_patch()
 # # see: https://github.com/miguelgrinberg/Flask-SocketIO/issues/65
 # monkey.patch_all()
 
+from project import config
+
 app = Flask(__name__)
 app.config.from_object(config)
+# app.queue = Queue()
+
 socketio = SocketIO(app, async_mode='eventlet') # "threading", "eventlet" or "gevent"
 
-from views import *
+from project.views import *

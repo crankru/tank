@@ -1,6 +1,7 @@
-from flask import Flask, render_template, Response, jsonify, request
+from flask import Flask, Response
 
-from project.video import VideoStream
+from project import config
+from project.video.video import VideoStream
 import time
 
 app = Flask(__name__)
@@ -17,4 +18,4 @@ def video_feed():
     return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True, threaded=False, port=5500)
+    app.run(host='0.0.0.0', debug=config.DEBUG, threaded=False, port=config.SEPARATE_STREAM_PORT)

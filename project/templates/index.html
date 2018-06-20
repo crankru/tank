@@ -25,8 +25,11 @@
                     <input id="servo_y" data-slider-id='servoSliderY' type="text" data-slider-min="400" data-slider-max="600" data-slider-step="1" data-slider-value="500" data-slider-orientation="vertical" />
                 </div>
                 <div class="col-11">
-                    <!-- <img src="http://192.168.1.123:5500/video_feed" class="img-fluid"> -->
-                    <img src="{{ url_for('video_feed') }}" class="img-fluid">
+                    {% if config.SEPARATE_STREAM_PROCESS %}
+                        <img src="http://{{ config.SEPARATE_STREAM_HOST }}:{{ config.SEPARATE_STREAM_PORT }}/video_feed" class="img-fluid">
+                    {% else %}
+                        <img src="{{ url_for('video_feed') }}" class="img-fluid">
+                    {% endif %}
                 </div>
             </div>
             <div class="row">

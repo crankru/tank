@@ -2,28 +2,47 @@ from flask import render_template, Response, jsonify, request
 from flask_socketio import emit
 
 from project import app, socketio
-import config
-
-from video import VideoStream#, Camera
-from move import RobotMove
-from servo import ServoControl
+from project import config
+from project.move import RobotMove
+from project.servo import ServoControl
+from project.video.video import VideoStream
 
 import time
+import subprocess
+import atexit
 
 RM = RobotMove()
 SC = ServoControl()
 # BATTERY = BatteryControl()
 
+
 @app.before_first_request
 def strat_video_stream():
-    global VS
-    VS = VideoStream()
-    VS.start()
+    if app.config['SEPARATE_STREAM_PROCESS']:
+        # print('Start video stream process...')
+        # video_process = subprocess.Popen('python video-stream.py', shell=True, stdout=subprocess.PIPE)
+
+        # def stop_video(process):
+        #     print('Stop video stream process...')
+        #     process.terminate()
+
+        # atexit.register(stop_video, process=video_process)
+        pass
+    else:
+        global VS
+        VS = VideoStream()
+        VS.start()
+
+if not app.config['SEPARATE_STREAM_PROCESS']:
+    @app.route('/video_feed')
+    def video_feed():
+        return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
+        # return Response(gen(Camera()), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/')
 def index():
     # send camera status
-    if VS:
+    if not app.config['SEPARATE_STREAM_PROCESS']:
         cam_status = VS.get_status()
         # print('cam status', cam_status)
         socketio.emit('camera', {'status': cam_status}, namespace=config.SOCKET_NAMESPACE)
@@ -35,12 +54,6 @@ def index():
 #         frame = camera.get_frame()
 #         yield (b'--frame\r\n'
 #             b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-
-
-@app.route('/video_feed')
-def video_feed():
-    return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
-    # return Response(gen(Camera()), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 ### Socket actions
 
