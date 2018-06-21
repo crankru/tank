@@ -5,7 +5,6 @@ from project import app, socketio
 from project import config
 from project.move import RobotMove
 from project.servo import ServoControl
-from project.video.video import VideoStream
 
 import time
 import subprocess
@@ -29,6 +28,7 @@ def strat_video_stream():
         # atexit.register(stop_video, process=video_process)
         pass
     else:
+        from project.video.video import VideoStream
         global VS
         VS = VideoStream()
         VS.start()

@@ -14,7 +14,6 @@ def start_video():
 
 @app.route('/video_feed')
 def video_feed():
-    # global VS
     return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
