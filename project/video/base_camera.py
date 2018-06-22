@@ -1,4 +1,5 @@
 import threading
+import time
 
 try:
     from greenlet import getcurrent as get_ident
@@ -42,15 +43,12 @@ class BaseCamera():
     last_access = 0
     # event = CameraEvent()
 
-    def __init__(self):
-        if BaseCamera.thread is None:
-            BaseCamera.last_access = time.time()
+    def __init__(self, resolution, fps):
+        BaseCamera.resolution = resolution
+        BaseCamera.fps = fps
 
-            BaseCamera.thread = threading.Thread(target=self._thread)
-            BaseCamera.thread.start()
-
-            while self.get_frame() is None:
-                time.sleep(0)
+    def __del__(self):
+        self.stop()
 
     def get_frame(self):
         # BaseCamera.last_access = time.time()
@@ -78,3 +76,17 @@ class BaseCamera():
             #     break
 
         BaseCamera.thread = None
+
+    def start(self):
+        if BaseCamera.thread is None:
+            BaseCamera.last_access = time.time()
+
+            BaseCamera.thread = threading.Thread(target=self._thread)
+            BaseCamera.thread.start()
+
+            while self.get_frame() is None:
+                time.sleep(0)
+
+    def stop(self):
+        if BaseCamera.thread:
+            BaseCamera.thread.stop()

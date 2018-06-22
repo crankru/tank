@@ -1,26 +1,28 @@
 from project.video.base_camera import BaseCamera
 
 import io
-import picamera
+import time
+from picamera import PiCamera
+from picamera.array import PiRGBArray
 
-# class Camera(BaseCamera):
-class Camera():
+class Camera(BaseCamera):
+
     @staticmethod
     def frames():
-        # with picamera.PiCamera as camera:
-        camera = PiCamera()
-        time.sleep(2)    
-        stream = io.BytesIO()
+        resolution = BaseCamera.resolution
+        framerate = BaseCamera.fps
 
-        resolution = (320, 240)
-        camera.resolution = resolution
-        # camera.framerate = 32
-        # rawCapture = PiRGBArray(camera, size=resolution)
-        # stream = camera.capture_continuous(rawCapture, format='bgr', use_video_port=True)
+        try:
+            camera = PiCamera(resolution=resolution, framerate=framerate)
+        except Exception:
+            print('Camera initialization error')
+            return False
+        else:
+            rawCapture = PiRGBArray(camera, size=resolution)
+            stream = camera.capture_continuous(rawCapture, format='bgr', use_video_port=True)
+            time.sleep(2)
 
-        for _ in camera.capture_continuous(stream, 'jpeg', use_video_port=True):
-            stream.seek(0)
-            yield stream.read()
-
-            stream.seek(0)
-            stream.truncate()
+        for f in stream:
+            yield(f.array)
+            rawCapture.truncate(0)
+            time.sleep(0)

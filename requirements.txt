@@ -1,6 +1,9 @@
 flask
 uwsgi
 
+# i2c
+smbus2
+
 # websocket
 flask-socketio
 eventlet

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 import re
-import smbus
+import smbus2 as smbus
 
 # ===========================================================================
 # Raspi_I2C Class
