@@ -21,8 +21,8 @@
                         <span class="fa-layers-text fa-inverse">100%</span>
                     </span>
                 </div> -->
-                <div class="col-1">
-                    <input id="servo_y" data-slider-id='servoSliderY' type="text" data-slider-min="400" data-slider-max="600" data-slider-step="1" data-slider-value="500" data-slider-orientation="vertical" />
+                <div class="col-1 text-left">
+                    <input id="servo_y" data-slider-id='servoSliderY' type="text" data-slider-min="{{ servo.yMin }}" data-slider-max="{{ servo.yMax }}" data-slider-step="1" data-slider-value="470" data-slider-orientation="vertical" />
                 </div>
                 <div class="col-11">
                     {% if config.SEPARATE_STREAM_PROCESS %}
@@ -34,7 +34,7 @@
             </div>
             <div class="row">
                 <div class="col-sm">
-                    <input id="servo_x" data-slider-id='servoSliderX' type="text" data-slider-min="150" data-slider-max="600" data-slider-step="1" data-slider-value="400"/>
+                    <input id="servo_x" data-slider-id='servoSliderX' type="text" data-slider-min="{{ servo.xMin }}" data-slider-max="{{ servo.xMax }}" data-slider-step="1" data-slider-value="320"/>
                 </div>
             </div>
             <div class="row">
@@ -49,20 +49,24 @@
                     <button type="botton" class="btn btn-primary">left</button>
                     <button type="botton" class="btn btn-primary">right</button><br>
                     <button type="botton" class="btn btn-primary">up</button><br> -->
-                    <button id="btn-move-stop" type="botton" class="btn btn-danger" title="Stop moving">
+                    <button id="btn-move-stop" type="button" class="btn btn-danger" title="Stop moving">
                         <i class="fas fa-stop-circle"></i>
                     </button><br>
 
-                    <button id="btn-camera-stop" type="botton" class="btn btn-primary" title="Camera on/off">
+                    <button id="btn-camera-stop" type="button" class="btn btn-primary" title="Camera on/off">
                         <i class="fas fa-video"></i>
                     </button> 
 
-                    <button id="btn-camera-photo" type="botton" class="btn btn-primary" title="Take photo">
+                    <button id="btn-camera-photo" type="button" class="btn btn-primary" title="Take photo">
                         <i class="fas fa-camera"></i>
                     </button><br>
 
-                    <button id="btn-camera-center" type="botton" class="btn btn-primary" title="Camera to center">
+                    <button id="btn-camera-center" type="button" class="btn btn-primary" title="Camera to center">
                         <i class="fas fa-angle-down"></i>
+                    </button>
+
+                    <button id="btn-servo-stop" type="button" class="btn btn-danger" title="Stop servo">
+                        <i class="fas fa-stop-circle"></i>
                     </button><br>
                 </div>
             </div>

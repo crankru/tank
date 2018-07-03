@@ -47,7 +47,19 @@ def index():
         # print('cam status', cam_status)
         socketio.emit('camera', {'status': cam_status}, namespace=config.SOCKET_NAMESPACE)
 
-    return render_template('index.html', mtime=time.time(), socket_namespace=config.SOCKET_NAMESPACE)
+    servo = {
+        'yMin': 300,
+        'yMax': 520,
+        'xMin': 150,
+        'xMax': 500,
+    }
+
+    return render_template(
+        'index.html', 
+        mtime=time.time(), 
+        socket_namespace=config.SOCKET_NAMESPACE,
+        servo=servo
+    )
 
 # def gen(camera):
 #     while True:
@@ -97,12 +109,12 @@ def servo(message):
     y = int(message.get('y', 0))
 
     if action ==  'stop':
-        SC.stop(0)
-        SC.stop(1)
+        SC.stop()
     elif action == 'move':
         SC.move(x, y)
     elif action == 'center':
         SC.center()
+        emit('servo', {'res': True, 'action': 'center'})
     else:
         print('Error: Unknown action "{}"'.format(action))
         emit('servo', {'res': False, 'data': 'Unknown action'})

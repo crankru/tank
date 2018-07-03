@@ -6,14 +6,14 @@ import time
 class ServoControl:
     def __init__(self):
         self.pwm = PWM(0x6F)
-        self.pwm.setPWMFreq(60)
+        self.pwm.setPWMFreq(50) # 60
 
-        self.x = self.centerX = 400
-        self.y = self.centerY = 500
+        self.x = self.centerX = 320 #400
+        self.y = self.centerY = 470 #500
 
         self.maxPosition = 50
-        self.minSpeed = 150  # Min pulse length out of 4096
-        self.maxSpeed = 600  # Max pulse length out of 4096
+        self.minPulse = 150  # Min pulse length out of 4096
+        self.maxPulse = 600  # Max pulse length out of 4096
 
         self.center()
 
@@ -42,8 +42,8 @@ class ServoControl:
         # self.pwm.setPWM(0, 0, speedX)
         # self.pwm.setPWM(1, 0, speedY)
 
-    def stop(self, channel):
-        self.pwm.setPWM(channel, 0, 0)
+    def stop(self):
+        print('I dont know how to stop servo :(')
 
     def center(self):
         self.pwm.setPWM(0, 0, self.centerX)
@@ -55,9 +55,9 @@ class ServoControl:
             return 0
 
         perc = float(abs(value)) / float(self.maxPosition)
-        speed = int(self.maxSpeed * perc)
+        speed = int(self.maxPulse * perc)
         # print(float(abs(value)) / float(self.maxPosition))
         # print(value, perc, speed)
-        if speed < self.minSpeed:
-            speed = self.minSpeed
+        if speed < self.minPulse:
+            speed = self.minPulse
         return speed
