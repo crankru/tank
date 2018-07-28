@@ -1,7 +1,7 @@
 Это репозиторий робота-танка на Raspberry Pi 3, с управлением через веб-интерфейс на Flask и SocketIO.
 
 - [Запуск](#Запуск)
-- [Описание процесса](./docs/index.md)
+- [История разработки](./docs/index.md)
 - [Список и стоимость деталей](https://docs.google.com/spreadsheets/d/1Ukt3rJ1fKwBE6TXDDFmFCdl11GmUvG5iqSfO8u2NnJY/edit?usp=sharing)
 
 
