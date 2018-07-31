@@ -5,6 +5,7 @@ from project import app, socketio
 from project import config
 from project.move import RobotMove
 from project.servo import ServoControl
+from project.battery import BatteryControl
 
 import time
 import subprocess
@@ -12,7 +13,7 @@ import atexit
 
 RM = RobotMove()
 SC = ServoControl()
-# BATTERY = BatteryControl()
+BATTERY = BatteryControl()
 
 
 @app.before_first_request
@@ -134,3 +135,8 @@ def camera(message):
 
     status = VS.get_status()
     emit('camera', {'res': True, 'status': status})
+
+@socketio.on('battery', namespace=config.SOCKET_NAMESPACE)
+def battery(message):
+    BATTERY.update_data()
+    emit('battery', {'res': True, 'data': BATTERY.get_data()})

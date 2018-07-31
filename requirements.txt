@@ -10,3 +10,6 @@ eventlet
 
 # Blynk
 # blynk-library-python
+
+# ina219
+pi-ina219

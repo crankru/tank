@@ -26,6 +26,7 @@ $(function() {
     var rc = new RobotControl(socket);
     var sc = new ServoControl(socket);
     var camera = new CameraControl(socket);
+    var battery = new BatteryControl(socket, 2);
 
     // manager1.on('move', function(evt, nipple) {
     //     sc.move(nipple);

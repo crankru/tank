@@ -13,14 +13,14 @@
     </head>
     <body>
         <div class="container">
+            <div id="battery" class="float-right">
+                <span class="voltage">7.5v</span>
+                <span class="fa-layers fa-fw">
+                    <i class="fas fa-battery-full fa-2x"></i>
+                    <span class="fa-layers-text fa-inverse">100%</span>
+                </span>
+            </div>
             <div id="j_zone1" class="j_zone1 row text-center">
-                <!-- <div id="battery" class="float-right col-sm">
-                    7.5v 
-                    <span class="fa-layers fa-fw">
-                        <i class="fas fa-battery-full fa-2x"></i>
-                        <span class="fa-layers-text fa-inverse">100%</span>
-                    </span>
-                </div> -->
                 <div class="col-1 text-left">
                     <input id="servo_y" data-slider-id='servoSliderY' type="text" data-slider-min="{{ servo.yMin }}" data-slider-max="{{ servo.yMax }}" data-slider-step="1" data-slider-value="470" data-slider-orientation="vertical" />
                 </div>
@@ -85,6 +85,7 @@
         <script src="{{ url_for('static', filename='js/camera_control.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='js/robot_control.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='js/servo_control.js') }}?{{ mtime }}"></script>
+        <script src="{{ url_for('static', filename='js/battery_control.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='js/main.js') }}?{{ mtime }}"></script>
     </body>
 </html>
