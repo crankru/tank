@@ -31,7 +31,12 @@ class BatteryControl
         var battery_percent = this.getBatteryPercent(msg.data.voltage);
         this.updateBatteryIcon(battery_percent);
         var voltageTag = document.querySelector('#battery span.voltage');
-        voltageTag.innerHTML = msg.data.voltage + 'V';
+        if(voltageTag) {
+            voltageTag.innerHTML = msg.data.voltage.toFixed(2) + 'V';
+        }
+
+        var percentTag = document.querySelector('#battery span.fa-layers-text');
+        percentTag.innerHTML = Math.round(battery_percent) + '%';
     }
 
     getBatteryPercent(voltage) {
@@ -44,28 +49,27 @@ class BatteryControl
     }
 
     updateBatteryIcon(percent) {
-        var b_100 = 'fas fa-battery-full';
-        var b_75 = 'fas fa-battery-three-quarters';
-        var b_50 = 'fas fa-battery-half';
-        var b_25 = 'fas fa-battery-quarter';
-        var b_0 = 'fas fa-battery-empty';
+        var batteryTag = document.querySelector('#battery svg');
 
         if(percent >= 80) {
-            var icon = b_100;
+            var icon = 'battery-full';
         } else if(percent >= 60 && percent < 80) {
-            var icon = b_75;
+            var icon = 'battery-three-quarters';
         } else if(percent >= 35 && percent < 60) {
-            var icon = b_50;
+            var icon = 'battery-half';
         } else if(percent >= 10 && percent < 35) {
-            var icon = b_25;
+            var icon = 'battery-quarter';
         } else {
-            var icon = b_0;
+            var icon = 'battery-empty';
+            batteryTag.style.color = 'red';
         }
 
-        if(this.batteryIcon != icon) {
+        // console.log(batteryTag);
+
+        if(this.batteryIcon != icon && batteryTag) {
             this.batteryIcon = icon;
-            var batteryTag = document.querySelector('#battery i');
-            batteryTag.className = this.batteryIcon;
+            // batteryTag.className = this.batteryIcon;
+            batteryTag.setAttribute('data-icon', icon);
         }
     }
 
