@@ -10,6 +10,8 @@ from project.battery import BatteryControl
 import time
 import subprocess
 import atexit
+import os
+import re
 
 RM = RobotMove()
 SC = ServoControl()
@@ -140,3 +142,11 @@ def camera(message):
 def battery(message):
     BATTERY.update_data()
     emit('battery', {'res': True, 'data': BATTERY.get_data()})
+
+@socketio.on('temperature', namespace=config.SOCKET_NAMESPACE)
+def temperature(message):
+    tmp = os.popen("vcgencmd measure_temp").readline()
+    r = re.search(r'temp=([0-9\.]+)', tmp)
+    
+    if r and r.group(1):
+        emit('temperature', {'temperature': r.group(1)})

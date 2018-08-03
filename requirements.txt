@@ -3,13 +3,8 @@ uwsgi
 
 # i2c
 smbus2
+pi-ina219
 
 # websocket
 flask-socketio
 eventlet
-
-# Blynk
-# blynk-library-python
-
-# ina219
-pi-ina219

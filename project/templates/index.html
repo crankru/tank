@@ -13,7 +13,11 @@
 
         <div class="container">
             <div class="row">
-                <div id="battery" class="text-right col-12">
+                <div id="temperature" class="col-6">
+                    <i class="fas fa-thermometer-empty fa-2x"></i>
+                    <span></span>
+                </div>
+                <div id="battery" class="text-right col-6">
                     <span class="voltage"></span>
                     <span class="fa-layers fa-fw fa-2x">
                         <i class="fas fa-battery-full"></i>
@@ -88,6 +92,7 @@
         <script src="{{ url_for('static', filename='js/robot_control.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='js/servo_control.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='js/battery_control.js') }}?{{ mtime }}"></script>
+        <script src="{{ url_for('static', filename='js/temperature_control.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='js/main.js') }}?{{ mtime }}"></script>
     </body>
 </html>

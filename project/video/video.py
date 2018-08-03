@@ -28,6 +28,7 @@ class VideoStream():
 
     def get_image(self):
         frame = self.driver.get_frame()
+        # frame = self.modify_frame(frame)
         ret, jpeg = cv.imencode('.jpg', frame)
         return jpeg.tobytes()
 
@@ -55,7 +56,6 @@ class VideoStream():
 
     def get_stream(self):
         while True:
-            # frame = self.get_frame()
             image = self.get_image()
             time.sleep(0)
             yield(b'--frame\r\n'

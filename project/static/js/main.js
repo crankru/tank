@@ -27,6 +27,7 @@ $(function() {
     var sc = new ServoControl(socket);
     var camera = new CameraControl(socket);
     var battery = new BatteryControl(socket, 2);
+    var temperature = new TemperatureControl(socket);
 
     // manager1.on('move', function(evt, nipple) {
     //     sc.move(nipple);
