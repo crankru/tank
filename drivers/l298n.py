@@ -6,6 +6,7 @@ import time
 class DCMotor:
     FORWARD = 1
     BACKWARD = 2
+    STOP = 4
 
     PWM_FREQ = 100
 
@@ -26,7 +27,7 @@ class DCMotor:
         state = GPIO.gpio_function(pin)
         # print(state, GPIO.OUT)
         if state != GPIO.OUT or True: # вот с этой херней надо разобраться
-            print('Set out pin:', pin)
+            # print('Set out pin:', pin)
             GPIO.setup(pin, GPIO.OUT)
 
         GPIO.output(pin, GPIO.LOW)
@@ -54,8 +55,12 @@ class DCMotor:
             self.bPwm.start(self.speed)
             # self._output(self.backward_pin, True)
 
+        elif direction == self.STOP:
+            self.stop()
+
         else:
-            print('Error: unknown direction')
+            self.stop()
+            print('Error: can`t run to direction', direction)
 
     def stop(self):
         self.direction = None
@@ -67,12 +72,14 @@ class DCMotor:
     def setSpeed(self, speed):
         if speed != self.speed:
             self.speed = speed
-            if self.direction == self.FORWARD:
+            if speed == 0:
+                self.stop()
+            elif self.direction == self.FORWARD:
                 self.fPwm.ChangeDutyCycle(self.speed)
             elif self.direction == self.BACKWARD:
                 self.fPwm.ChangeDutyCycle(self.speed)
             else:
-                print('Error: can`t change speed, unknown direction')
+                print('Error: can`t change speed to direction', self.direction)
 
     def __del__(self):
         self.stop()

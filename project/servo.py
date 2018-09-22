@@ -1,5 +1,5 @@
-from driver.Raspi_MotorHAT import Raspi_MotorHAT, Raspi_DCMotor
-from driver.Raspi_PWM_Servo_Driver import PWM
+from drivers.Raspi_MotorHAT import Raspi_MotorHAT, Raspi_DCMotor
+from drivers.Raspi_PWM_Servo_Driver import PWM
 
 import time
 

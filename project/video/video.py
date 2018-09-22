@@ -29,8 +29,12 @@ class VideoStream():
     def get_image(self):
         frame = self.driver.get_frame()
         # frame = self.modify_frame(frame)
-        ret, jpeg = cv.imencode('.jpg', frame)
-        return jpeg.tobytes()
+        if frame:
+            ret, jpeg = cv.imencode('.jpg', frame)
+            return jpeg.tobytes()
+        else:
+            # print('Huipizda!')
+            return b''
 
     def take_photo(self):
         img = self.get_image()

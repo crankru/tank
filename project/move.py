@@ -1,14 +1,24 @@
-from driver.Raspi_MotorHAT import Raspi_MotorHAT, Raspi_DCMotor
+from project import config
+from drivers.Raspi_MotorHAT import Raspi_MotorHAT, Raspi_DCMotor
+
+if config.MOTOR_DRIVER == 'l298n':
+    from drivers.l298n import MotorDriver
 
 import math
 
 class RobotMove:
     def __init__(self):
-        self.mh = Raspi_MotorHAT(addr=0x6F)
-        self.motorRight = self.mh.getMotor(2)
-        self.motorLeft = self.mh.getMotor(1)
+        if config.MOTOR_DRIVER == 'l298n':
+            self.mh = MotorDriver()
+            self.motorLeft = self.mh.addMotor(1, 12, 13)
+            self.motorRight = self.mh.addMotor(2, 18, 19)
+            self.maxSpeed = 100
+        else:
+            self.mh = Raspi_MotorHAT(addr=0x6F)
+            self.motorRight = self.mh.getMotor(2)
+            self.motorLeft = self.mh.getMotor(1)
+            self.maxSpeed = 255
 
-        self.maxSpeed = 255
         self.minSpeed = 30
 
         self.zeroPosition = self._y = self._x = 0

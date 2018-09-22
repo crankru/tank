@@ -6,6 +6,7 @@ from project import config
 from project.move import RobotMove
 from project.servo import ServoControl
 from project.battery import BatteryControl
+from project.video.video import VideoStream
 
 import time
 import subprocess
@@ -22,7 +23,7 @@ BATTERY = BatteryControl()
 def strat_video_stream():
     if app.config['SEPARATE_STREAM_PROCESS']:
         # print('Start video stream process...')
-        # video_process = subprocess.Popen('python video-stream.py', shell=True, stdout=subprocess.PIPE)
+        # video_process = subprocess.Popen('python3 video-stream.py', shell=True, stdout=subprocess.PIPE)
 
         # def stop_video(process):
         #     print('Stop video stream process...')
@@ -31,16 +32,17 @@ def strat_video_stream():
         # atexit.register(stop_video, process=video_process)
         pass
     else:
-        from project.video.video import VideoStream
         global VS
         VS = VideoStream()
         VS.start()
+        # from threading import Thread
+        # t = Thread(target=VS.start)
+        # t.start()
 
 if not app.config['SEPARATE_STREAM_PROCESS']:
     @app.route('/video_feed')
     def video_feed():
         return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
-        # return Response(gen(Camera()), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/')
 def index():

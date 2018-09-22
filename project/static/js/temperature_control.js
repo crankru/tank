@@ -17,6 +17,8 @@ class TemperatureControl
         socket.on('temperature', function(msg) {
             $this.updateTempIcon(msg.temperature);
         });
+
+        socket.emit('temperature', {});
     
         setInterval(function() {
             socket.emit('temperature', {});

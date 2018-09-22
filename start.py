@@ -24,4 +24,14 @@ atexit.register(kill_process, MOVE_PROC, VIDEO_PROC)
 # signal.signal(signal.SIGTERM, stop_handler)
 
 while True:
+    # print('test')
+    # buff1 = MOVE_PROC.stdout.read(1)
+    # # buff2 = VIDEO_PROC.stdout.read(1)
+    # if len(buff1) > 0:
+    #     sys.stdout.write(buff1)
+    #     # sys.stdout.write(buff2)
+    #     sys.stdout.flush()
+    # print('test')
+    # stdout, stderr = MOVE_PROC.communicate()
+    # print(stdout, stderr)
     time.sleep(1)

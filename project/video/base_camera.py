@@ -84,8 +84,11 @@ class BaseCamera():
             BaseCamera.thread = threading.Thread(target=self._thread)
             BaseCamera.thread.start()
 
-            while self.get_frame() is None:
-                time.sleep(0)
+            if self.get_frame() is None:
+                print('Warning: empty camera frame')
+
+            # while self.get_frame() is None:
+            #     time.sleep(0)
 
     def stop(self):
         if BaseCamera.thread:
