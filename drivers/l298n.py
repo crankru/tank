@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 import time
-# import asyncio
+import asyncio
 import threading
 
 class DCMotor:
@@ -41,27 +41,39 @@ class DCMotor:
 
     def _impulse(self, pin, freq):
         pin.start(freq)
-        time.sleep(.1)
+        # time.sleep(.1)
+        # await asyncio.sleep(.1)
 
     def _loop(self, direction, pin):
         print('Start loop', direction, pin)
-        while self.direction == direction:
-            self._impulse(pin, self.speed)
+        while self.direction:
+        # while self.direction == direction:            
+        # while True:
+            if self.direction == self.FORWARD:
+                self._impulse(self.fPwm, self.speed)
+            elif self.direction == self.BACKWARD:
+                self._impulse(self.bPwm, self.speed)
+            else:
+                print('Error: unknown direction type')
 
-        print('End loop')
+            time.sleep(.1)
+
+        print('End loop', self.direction, direction)
 
     def run(self, direction):
         # print(self.speed)
-        if direction != self.direction and self.thread:
-            # print('STOP THREAD')
-            # self.thread.stop()
-            self.thread = None
+        # if direction != self.direction and self.thread:
+        #     # print('STOP THREAD')
+        #     # if self.thread.is_alive():
+        #     #     self.thread.stop()
+        #     self.thread = None
         
         if direction == self.FORWARD:
             self.direction = self.FORWARD
             self._output(self.backward_pin, False)
             # self._output(self.forward_pin, True)
 
+            # self._loop(self.FORWARD, self.fPwm)
             if not self.thread:
                 self.thread = threading.Thread(target=self._loop, args=(self.FORWARD, self.fPwm))
                 self.thread.start()
@@ -71,6 +83,7 @@ class DCMotor:
             self._output(self.forward_pin, False)
             # self._output(self.backward_pin, True)
 
+            # self._loop(self.BACKWARD, self.bPwm)
             if not self.thread:
                 self.thread = threading.Thread(target=self._loop, args=(self.BACKWARD, self.bPwm))
                 self.thread.start()
@@ -79,9 +92,9 @@ class DCMotor:
             print('Error: unknown direction')
 
     def stop(self):
-        GPIO.output(self.backward_pin, GPIO.LOW)
-        GPIO.output(self.backward_pin, GPIO.LOW)
         self.direction = None
+        GPIO.output(self.backward_pin, GPIO.LOW)
+        GPIO.output(self.backward_pin, GPIO.LOW)
 
     def setSpeed(self, speed):
         if speed != self.speed:
