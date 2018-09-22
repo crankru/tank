@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 import time
-import asyncio
-import threading
+# import asyncio
+# import threading
 
 class DCMotor:
     FORWARD = 1
@@ -39,66 +39,40 @@ class DCMotor:
         else:
             print('Cann`t set unknown value `{}` to pin `{}`'.format(value, pin))
 
-    def _impulse(self, pin, freq):
-        pin.start(freq)
-        # time.sleep(.1)
-        # await asyncio.sleep(.1)
-
-    def _loop(self, direction, pin):
-        print('Start loop', direction, pin)
-        while self.direction:
-        # while self.direction == direction:            
-        # while True:
-            if self.direction == self.FORWARD:
-                self._impulse(self.fPwm, self.speed)
-            elif self.direction == self.BACKWARD:
-                self._impulse(self.bPwm, self.speed)
-            else:
-                print('Error: unknown direction type')
-
-            time.sleep(.1)
-
-        print('End loop', self.direction, direction)
-
-    def run(self, direction):
-        # print(self.speed)
-        # if direction != self.direction and self.thread:
-        #     # print('STOP THREAD')
-        #     # if self.thread.is_alive():
-        #     #     self.thread.stop()
-        #     self.thread = None
-        
+    def run(self, direction):        
         if direction == self.FORWARD:
             self.direction = self.FORWARD
-            self._output(self.backward_pin, False)
+            # self._output(self.backward_pin, False)
+            self.bPwm.stop()
+            self.fPwm.start(self.speed)
             # self._output(self.forward_pin, True)
-
-            # self._loop(self.FORWARD, self.fPwm)
-            if not self.thread:
-                self.thread = threading.Thread(target=self._loop, args=(self.FORWARD, self.fPwm))
-                self.thread.start()
 
         elif direction == self.BACKWARD:
             self.direction = self.BACKWARD
-            self._output(self.forward_pin, False)
+            # self._output(self.forward_pin, False)
+            self.fPwm.stop()
+            self.bPwm.start(self.speed)
             # self._output(self.backward_pin, True)
-
-            # self._loop(self.BACKWARD, self.bPwm)
-            if not self.thread:
-                self.thread = threading.Thread(target=self._loop, args=(self.BACKWARD, self.bPwm))
-                self.thread.start()
 
         else:
             print('Error: unknown direction')
 
     def stop(self):
         self.direction = None
-        GPIO.output(self.backward_pin, GPIO.LOW)
-        GPIO.output(self.backward_pin, GPIO.LOW)
+        self.fPwm.stop()
+        self.bPwm.stop()
+        # GPIO.output(self.backward_pin, GPIO.LOW)
+        # GPIO.output(self.backward_pin, GPIO.LOW)
 
     def setSpeed(self, speed):
         if speed != self.speed:
             self.speed = speed
+            if self.direction == self.FORWARD:
+                self.fPwm.ChangeDutyCycle(self.speed)
+            elif self.direction == self.BACKWARD:
+                self.fPwm.ChangeDutyCycle(self.speed)
+            else:
+                print('Error: can`t change speed, unknown direction')
 
     def __del__(self):
         self.stop()
@@ -119,8 +93,8 @@ class MotorDriver:
 
 if __name__ == '__main__':
     driver = MotorDriver()
-    left_motor = driver.addMotor(1, 17, 27)
-    right_motor = driver.addMotor(2, 22, 13)
+    left_motor = driver.addMotor(1, 12, 13)
+    right_motor = driver.addMotor(2, 18, 19)
 
     left_motor.stop()
     right_motor.stop()
@@ -132,9 +106,10 @@ if __name__ == '__main__':
     right_motor.run(DCMotor.FORWARD)
     time.sleep(2)
 
-    # for s in range(20, 100):
-    #     left_motor.setSpeed(s)
-    #     right_motor.setSpeed(s)
+    for s in range(20, 100):
+        left_motor.setSpeed(s)
+        right_motor.setSpeed(s)
+        time.sleep(.1)
 
     left_motor.run(DCMotor.BACKWARD)
     right_motor.run(DCMotor.BACKWARD)
@@ -142,3 +117,10 @@ if __name__ == '__main__':
 
     left_motor.stop()
     right_motor.stop()
+
+    # GPIO.setmode(GPIO.BCM)
+    # GPIO.setup(12, GPIO.OUT)
+    # p = GPIO.PWM(12, 100)
+    # p.start(30)
+    # time.sleep(5)
+    # p.stop()
