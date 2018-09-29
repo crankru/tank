@@ -36,8 +36,8 @@ class RobotMove:
     def __del__(self):
         self.mh.getMotor(1).run(Raspi_MotorHAT.RELEASE)
         self.mh.getMotor(2).run(Raspi_MotorHAT.RELEASE)
-        self.mh.getMotor(3).run(Raspi_MotorHAT.RELEASE)
-        self.mh.getMotor(4).run(Raspi_MotorHAT.RELEASE)
+        # self.mh.getMotor(3).run(Raspi_MotorHAT.RELEASE)
+        # self.mh.getMotor(4).run(Raspi_MotorHAT.RELEASE)
 
     def getSpeed(self):
         return self.speedLeft, self.speedRight

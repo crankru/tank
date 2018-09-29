@@ -5,7 +5,8 @@ import time
 
 class ServoControl:
     def __init__(self):
-        self.pwm = PWM(0x6F)
+        # self.pwm = PWM(0x6F)
+        self.pwm = PWM(0x41)
         self.pwm.setPWMFreq(50) # 60
 
         self.x = self.centerX = 320 #400
@@ -15,7 +16,7 @@ class ServoControl:
         self.minPulse = 150  # Min pulse length out of 4096
         self.maxPulse = 600  # Max pulse length out of 4096
 
-        self.center()
+        # self.center()
 
     def __del__(self):
         self.pwm.setAllPWM(0, 0)
@@ -47,7 +48,7 @@ class ServoControl:
 
     def center(self):
         self.pwm.setPWM(0, 0, self.centerX)
-        time.sleep(1)
+        # time.sleep(1)
         self.pwm.setPWM(1, 0, self.centerY)
 
     def calcSpeed(self, value):

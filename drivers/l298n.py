@@ -8,7 +8,7 @@ class DCMotor:
     BACKWARD = 2
     STOP = 4
 
-    PWM_FREQ = 100
+    PWM_FREQ = 1000
 
     speed = None
     direction = None
