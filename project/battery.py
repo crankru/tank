@@ -40,8 +40,8 @@ class BatteryControl:
             print(e)
 
 if __name__== '__main__':
-    pc = PowerControl()
-    pc.print()
+    bc = BatteryControl()
+    bc.print()
 
 
 # import serial

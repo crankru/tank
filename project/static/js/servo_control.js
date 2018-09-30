@@ -2,8 +2,8 @@ class ServoControl
 {
     constructor(socket) {
         this.socket = socket;
-        this.x = this.centerX = 320; //400
-        this.y = this.centerY = 470; //500
+        this.x = this.centerX = 350; //400
+        this.y = this.centerY = 500; //500
 
         //  = '#servoSliderY';
         //  = '#servoSliderX';
@@ -30,9 +30,21 @@ class ServoControl
         });
 
         $('#btn-servo-stop').on('click', function() {
-            console.log('servo stop');
+            // console.log('servo stop');
             $this.stop();
         });
+
+        // $('#servoX').on('change', function(e) {
+        //     console.log('X', this.value);
+        //     $this.x = this.value;
+        //     $this.move();
+        // });
+
+        // $('#servoY').on('change', function(e) {
+        //     console.log('Y', this.value);
+        //     $this.y = this.value;
+        //     $this.move();
+        // });
 
         // slider moving events
         this.sliderX.on('slide', function(e) {
@@ -93,7 +105,7 @@ class ServoControl
     // }
 
     stop() {
-        console.log('stop');
+        // console.log('stop');
         this.socket.emit('servo', {action: 'stop'});
     }
 

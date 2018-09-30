@@ -6,15 +6,15 @@ import time
 class ServoControl:
     def __init__(self):
         # self.pwm = PWM(0x6F)
-        self.pwm = PWM(0x41)
+        self.pwm = PWM(0x19)
         self.pwm.setPWMFreq(50) # 60
 
-        self.x = self.centerX = 320 #400
-        self.y = self.centerY = 470 #500
+        self.x = self.centerX = 350 #400
+        self.y = self.centerY = 500 #500
 
-        self.maxPosition = 50
-        self.minPulse = 150  # Min pulse length out of 4096
-        self.maxPulse = 600  # Max pulse length out of 4096
+        # self.maxPosition = 50
+        # self.minPulse = 150  # Min pulse length out of 4096
+        # self.maxPulse = 550  # Max pulse length out of 4096
 
         # self.center()
 
@@ -22,12 +22,14 @@ class ServoControl:
         self.pwm.setAllPWM(0, 0)
 
     def setX(self, x):
-        self.x = x
-        self.pwm.setPWM(0, 0, x)
+        self.x = int(x)
+        self.pwm.setPWM(0, 0, int(x))
+        # print('X:', type(self.x), x)
 
     def setY(self, y):
-        self.y = y
-        self.pwm.setPWM(1, 0, y)
+        self.y = int(y)
+        self.pwm.setPWM(1, 0, int(y))
+        # print('Y:', type(self.y), y)
 
     def move(self, x, y):
         # speedX = self.calcSpeed(x)
@@ -44,21 +46,22 @@ class ServoControl:
         # self.pwm.setPWM(1, 0, speedY)
 
     def stop(self):
-        print('I dont know how to stop servo :(')
+        # print('I dont know how to stop servo :(')
+        self.pwm.setAllPWM(0, 0)
 
     def center(self):
         self.pwm.setPWM(0, 0, self.centerX)
         # time.sleep(1)
         self.pwm.setPWM(1, 0, self.centerY)
 
-    def calcSpeed(self, value):
-        if value == 0:
-            return 0
+    # def calcSpeed(self, value):
+    #     if value == 0:
+    #         return 0
 
-        perc = float(abs(value)) / float(self.maxPosition)
-        speed = int(self.maxPulse * perc)
-        # print(float(abs(value)) / float(self.maxPosition))
-        # print(value, perc, speed)
-        if speed < self.minPulse:
-            speed = self.minPulse
-        return speed
+    #     perc = float(abs(value)) / float(self.maxPosition)
+    #     speed = int(self.maxPulse * perc)
+    #     # print(float(abs(value)) / float(self.maxPosition))
+    #     # print(value, perc, speed)
+    #     if speed < self.minPulse:
+    #         speed = self.minPulse
+    #     return speed

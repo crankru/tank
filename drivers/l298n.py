@@ -55,7 +55,7 @@ class DCMotor:
             self.bPwm.start(self.speed)
             # self._output(self.backward_pin, True)
 
-        elif direction == self.STOP:
+        elif direction == self.STOP or direction == None:
             self.stop()
 
         else:

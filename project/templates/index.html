@@ -27,7 +27,7 @@
             </div>
             <div id="j_zone1" class="j_zone1 row text-center">
                 <div class="col-1 text-left">
-                    <input id="servo_y" data-slider-id='servoSliderY' type="text" data-slider-min="{{ servo.yMin }}" data-slider-max="{{ servo.yMax }}" data-slider-step="1" data-slider-value="470" data-slider-orientation="vertical" />
+                    <input id="servo_y" data-slider-id='servoSliderY' type="text" data-slider-min="{{ servo.yMin }}" data-slider-max="{{ servo.yMax }}" data-slider-step="1" data-slider-value="500" data-slider-orientation="vertical" />
                 </div>
                 <div class="col-11">
                     {% if config.SEPARATE_STREAM_PROCESS %}
@@ -37,9 +37,13 @@
                     {% endif %}
                 </div>
             </div>
+            <!-- <div class="row">
+                <input type="integer" id="servoX" placeholder="X">
+                <input type="integer" id="servoY" placeholder="Y">
+            </div> -->
             <div class="row">
                 <div class="col-sm">
-                    <input id="servo_x" data-slider-id='servoSliderX' type="text" data-slider-min="{{ servo.xMin }}" data-slider-max="{{ servo.xMax }}" data-slider-step="1" data-slider-value="320"/>
+                    <input id="servo_x" data-slider-id='servoSliderX' type="text" data-slider-min="{{ servo.xMin }}" data-slider-max="{{ servo.xMax }}" data-slider-step="1" data-slider-value="350"/>
                 </div>
             </div>
             <div class="row">
@@ -70,9 +74,9 @@
                         <i class="fas fa-angle-down"></i>
                     </button>
 
-                    <!-- <button id="btn-servo-stop" type="button" class="btn btn-danger" title="Stop servo">
+                    <button id="btn-servo-stop" type="button" class="btn btn-danger" title="Stop servo">
                         <i class="fas fa-stop-circle"></i>
-                    </button><br> -->
+                    </button><br>
                 </div>
             </div>
         </div>

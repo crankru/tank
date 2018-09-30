@@ -16,7 +16,7 @@ import re
 
 RM = RobotMove()
 SC = ServoControl()
-BATTERY = BatteryControl()
+# BATTERY = BatteryControl()
 
 
 @app.before_first_request
@@ -54,9 +54,9 @@ def index():
 
     servo = {
         'yMin': 300,
-        'yMax': 520,
+        'yMax': 550,
         'xMin': 150,
-        'xMax': 500,
+        'xMax': 550,
     }
 
     return render_template(
@@ -116,6 +116,7 @@ def servo(message):
     if action ==  'stop':
         SC.stop()
     elif action == 'move':
+        print('x: {}; y: {}'.format(x, y))
         SC.move(x, y)
     elif action == 'center':
         SC.center()
@@ -140,10 +141,10 @@ def camera(message):
     status = VS.get_status()
     emit('camera', {'res': True, 'status': status})
 
-@socketio.on('battery', namespace=config.SOCKET_NAMESPACE)
-def battery(message):
-    BATTERY.update_data()
-    emit('battery', {'res': True, 'data': BATTERY.get_data()})
+# @socketio.on('battery', namespace=config.SOCKET_NAMESPACE)
+# def battery(message):
+#     BATTERY.update_data()
+#     emit('battery', {'res': True, 'data': BATTERY.get_data()})
 
 @socketio.on('temperature', namespace=config.SOCKET_NAMESPACE)
 def temperature(message):
