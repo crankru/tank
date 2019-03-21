@@ -1,8 +1,11 @@
+from flask import Blueprint
+bp = Blueprint('move', __name__)
+
 from flask import render_template, Response, jsonify, request
 from flask_socketio import emit
 
-from project import create_app, socketio
-from project import config
+from project import socketio, config
+# from project import create_app, socketio, config
 from project.move.move import RobotMove
 from project.servo import ServoControl
 from project.battery import BatteryControl
@@ -18,62 +21,7 @@ RM = RobotMove()
 SC = ServoControl()
 # BATTERY = BatteryControl()
 
-app = create_app()
-
-@app.before_first_request
-def strat_video_stream():
-    if app.config['SEPARATE_STREAM_PROCESS']:
-        # print('Start video stream process...')
-        # video_process = subprocess.Popen('python3 video-stream.py', shell=True, stdout=subprocess.PIPE)
-
-        # def stop_video(process):
-        #     print('Stop video stream process...')
-        #     process.terminate()
-
-        # atexit.register(stop_video, process=video_process)
-        pass
-    else:
-        global VS
-        VS = VideoStream()
-        VS.start()
-        # from threading import Thread
-        # t = Thread(target=VS.start)
-        # t.start()
-
-if not app.config['SEPARATE_STREAM_PROCESS']:
-    @app.route('/video_feed')
-    def video_feed():
-        return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
-
-@app.route('/')
-def index():
-    # send camera status
-    if not app.config['SEPARATE_STREAM_PROCESS']:
-        cam_status = VS.get_status()
-        # print('cam status', cam_status)
-        socketio.emit('camera', {'status': cam_status}, namespace=config.SOCKET_NAMESPACE)
-
-    servo = {
-        'yMin': 300,
-        'yMax': 550,
-        'xMin': 150,
-        'xMax': 550,
-    }
-
-    return render_template(
-        'index.html', 
-        mtime=time.time(), 
-        socket_namespace=config.SOCKET_NAMESPACE,
-        servo=servo
-    )
-
-# def gen(camera):
-#     while True:
-#         frame = camera.get_frame()
-#         yield (b'--frame\r\n'
-#             b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-
-### Socket actions
+# app = create_app()
 
 @socketio.on('connect', namespace=config.SOCKET_NAMESPACE)
 def connection():

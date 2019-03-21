@@ -56,5 +56,6 @@ class CameraControl
 
     takePhoto() {
         console.log('take photo');
+        this.socket.emit('camera', {'action': 'take_photo'});
     }
 }

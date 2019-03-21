@@ -1,6 +1,10 @@
 import cv2 as cv
 import time
+import os
+import datetime
+import subprocess
 from threading import Thread
+import numpy
 
 from picamera import PiCamera
 from picamera.array import PiRGBArray
@@ -29,15 +33,19 @@ class VideoStream():
     def get_image(self):
         frame = self.driver.get_frame()
         # frame = self.modify_frame(frame)
-        if frame:
+        # print(type(frame))
+        if type(frame) == numpy.ndarray:
             ret, jpeg = cv.imencode('.jpg', frame)
+            # print(jpeg.tobytes())
             return jpeg.tobytes()
         else:
             # print('Huipizda!')
             return b''
 
     def take_photo(self):
-        img = self.get_image()
+        # img = self.get_image()
+        subprocess.run('raspistill -v -o {}/images/img_{}.jpg'.format(os.getcwd(), datetime.now()))
+        print('Take photo')
 
     def modify_frame(self, frame):
         h = int(self.cv_height  / 2)

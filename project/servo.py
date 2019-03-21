@@ -6,7 +6,7 @@ import time
 class ServoControl:
     def __init__(self):
         # self.pwm = PWM(0x6F)
-        self.pwm = PWM(0x19)
+        self.pwm = PWM(0x70)
         self.pwm.setPWMFreq(50) # 60
 
         self.x = self.centerX = 350 #400
