@@ -92,7 +92,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.2.0/js/all.js" integrity="sha384-4oV5EgaV02iISL2ban6c/RmotsABqE4yZxZLcYMAdG7FAPsyHYAPpywE9PJo+Khy" crossorigin="anonymous"></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
         <script src="{{ url_for('static', filename='libs/nipplejs/dist/nipplejs.min.js') }}"></script>
         <script src="{{ url_for('static', filename='libs/bootstrap-slider/dist/bootstrap-slider.min.js') }}"></script>
@@ -103,6 +104,6 @@
         <script src="{{ url_for('static', filename='js/temperature_control.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='js/main.js') }}?{{ mtime }}"></script>
 
-        <!-- <script src="{{ url_for('static', filename='src/main.js') }}"></script> -->
+        <script src="{{ url_for('static', filename='assets/src/main.js') }}?{{ mtime }}"></script>
     </body>
 </html>
