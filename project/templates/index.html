@@ -10,7 +10,7 @@
 
     </head>
     <body>
-
+<!-- 
         <div class="container">
             <div class="row">
                 <div id="temperature" class="col-6">
@@ -33,14 +33,10 @@
                     {% if config.SEPARATE_STREAM_PROCESS %}
                         <img src="http://{{ config.SEPARATE_STREAM_HOST }}:{{ config.SEPARATE_STREAM_PORT }}/video_feed" class="img-fluid">
                     {% else %}
-                        <img src="{{ url_for('video_feed') }}" class="img-fluid">
+                        <img src="" class="img-fluid">
                     {% endif %}
                 </div>
             </div>
-            <!-- <div class="row">
-                <input type="integer" id="servoX" placeholder="X">
-                <input type="integer" id="servoY" placeholder="Y">
-            </div> -->
             <div class="row">
                 <div class="col-sm">
                     <input id="servo_x" data-slider-id='servoSliderX' type="text" data-slider-min="{{ servo.xMin }}" data-slider-max="{{ servo.xMax }}" data-slider-step="1" data-slider-value="350"/>
@@ -54,10 +50,6 @@
                     </div>
                 </div>
                 <div class="col-sm text-center">
-                    <!-- <button type="botton" class="btn btn-primary">up</button><br>
-                    <button type="botton" class="btn btn-primary">left</button>
-                    <button type="botton" class="btn btn-primary">right</button><br>
-                    <button type="botton" class="btn btn-primary">up</button><br> -->
                     <button id="btn-move-stop" type="button" class="btn btn-danger" title="Stop moving">
                         <i class="fas fa-stop-circle"></i>
                     </button><br>
@@ -79,7 +71,7 @@
                     </button><br>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div id="app"></div>
 
@@ -97,14 +89,14 @@
 
         <script src="{{ url_for('static', filename='libs/nipplejs/dist/nipplejs.min.js') }}"></script>
         <script src="{{ url_for('static', filename='libs/bootstrap-slider/dist/bootstrap-slider.min.js') }}"></script>
+
+        <script src="{{ url_for('static', filename='assets/src/main.js') }}?{{ mtime }}"></script>
+
         <script src="{{ url_for('static', filename='js/camera_control.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='js/robot_control.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='js/servo_control.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='js/battery_control.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='js/temperature_control.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='js/main.js') }}?{{ mtime }}"></script>
-
-        <!-- <script src="{{ url_for('static', filename='assets/src/components/header.js') }}?{{ mtime }}"></script> -->
-        <script src="{{ url_for('static', filename='assets/src/main.js') }}?{{ mtime }}"></script>
     </body>
 </html>

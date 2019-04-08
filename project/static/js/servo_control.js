@@ -19,6 +19,8 @@ class ServoControl
             formatter: function(value) { return value }
         });
 
+        console.log(sliderY, sliderX);
+
         this.bindEvents();
         this.listenEvents();
     }
@@ -45,6 +47,8 @@ class ServoControl
         //     $this.y = this.value;
         //     $this.move();
         // });
+
+        // console.log(this.sliderX);
 
         // slider moving events
         this.sliderX.on('slide', function(e) {

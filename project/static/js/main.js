@@ -24,7 +24,7 @@ $(function() {
     var manager2 = nipplejs.create(options2);
 
     var rc = new RobotControl(socket);
-    var sc = new ServoControl(socket);
+    // var sc = new ServoControl(socket);
     var camera = new CameraControl(socket);
     var battery = new BatteryControl(socket, 2);
     var temperature = new TemperatureControl(socket);

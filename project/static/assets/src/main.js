@@ -1,5 +1,5 @@
 var Header = {
-    template: '<div class="row"> \
+    template: '<div class="row bg-secondary p-2"> \
             <div id="temperature" class="col-6"> \
                 <i class="fas fa-thermometer-empty fa-2x"></i> \
                 <span></span> \
@@ -15,31 +15,36 @@ var Header = {
 }
 
 var Video = {
-    template: '<img src="" class="img-fluid">',
+    template: '<div> \
+    <div style="height: 380; width: 100%;"><p>No fucking video</p></div> \
+    <!--<img src="/video_feed" class="img-fluid"> \
+    <video id="videoPlayer" controls> \
+        <source src="http://192.168.1.10:5500" type="video/mp4"> \
+    </video>--> \
+    </div>',
 }
 
-var SliderX = {
-    template: '',
-}
+// var SliderX = {
+//     template: '',
+// }
 
-var SliderY = {
-    template: '<input id="servo_y" data-slider-id="servoSliderY" type="text" :data-slider-min="servo.yMin" :data-slider-max="servo.yMax" data-slider-step="1" data-slider-value="500" data-slider-orientation="vertical" />',
-    data() {
-        return {
-            servo: {
-                yMin: 100,
-                yMax: 200,
-            }
-        }
-    }
-}
+// var SliderY = {
+//     template: '<input id="servo_y" data-slider-id="servoSliderY" type="text" :data-slider-min="servo.yMin" :data-slider-max="servo.yMax" data-slider-step="1" data-slider-value="500" data-slider-orientation="vertical" />',
+//     data() {
+//         return {
+//             servo: {
+//                 yMin: 100,
+//                 yMax: 200,
+//             }
+//         }
+//     }
+// }
 
 var App = {
     template: '<div class="container"> \
         <Header /> \
         <div id="j_zone1" class="j_zone1 row text-center"> \
             <div class="col-1 text-left"> \
-                <SliderY /> \
             </div> \
             <div class="col-11"> \
                 <Video /> \
@@ -71,7 +76,7 @@ var App = {
                 </div> \
             </div> \
     </div>',
-    components: { Header, Video, SliderY },
+    components: { Header, Video },
 }
 
 new Vue({

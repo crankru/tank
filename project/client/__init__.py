@@ -22,18 +22,13 @@ SC = ServoControl()
 
 # app = create_app()
 
-if not config.SEPARATE_STREAM_PROCESS:
-    @bp.route('/video_feed')
-    def video_feed():
-        return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
-
 @bp.route('/')
 def index():
     # send camera status
-    if not config.SEPARATE_STREAM_PROCESS:
-        cam_status = VS.get_status()
-        # print('cam status', cam_status)
-        socketio.emit('camera', {'status': cam_status}, namespace=config.SOCKET_NAMESPACE)
+    # if not config.SEPARATE_STREAM_PROCESS:
+    #     cam_status = VS.get_status()
+    #     # print('cam status', cam_status)
+    #     socketio.emit('camera', {'status': cam_status}, namespace=config.SOCKET_NAMESPACE)
 
     servo = {
         'yMin': 300,
