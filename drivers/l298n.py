@@ -60,7 +60,7 @@ class DCMotor:
 
         else:
             self.stop()
-            print('Error: can`t run to direction', direction)
+            # print('Error: can`t run to direction', direction)
 
     def stop(self):
         self.direction = None

@@ -16,9 +16,8 @@ var Header = {
 
 var Video = {
     template: '<div> \
-    <div style="height: 380; width: 100%;"><p>No fucking video</p></div> \
-    <!--<img src="/video_feed" class="img-fluid"> \
-    <video id="videoPlayer" controls> \
+    <img src="http://192.168.1.123:5500/video_feed" class="img-fluid"> \
+    <!--<video id="videoPlayer" controls> \
         <source src="http://192.168.1.10:5500" type="video/mp4"> \
     </video>--> \
     </div>',
