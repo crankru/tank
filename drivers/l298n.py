@@ -60,7 +60,7 @@ class DCMotor:
 
         else:
             self.stop()
-            # print('Error: can`t run to direction', direction)
+            print('Error: can`t run to direction', direction)
 
     def stop(self):
         self.direction = None
@@ -79,7 +79,8 @@ class DCMotor:
             elif self.direction == self.BACKWARD:
                 self.fPwm.ChangeDutyCycle(self.speed)
             else:
-                print('Error: can`t change speed to direction', self.direction)
+                # print('Error: can`t change speed to direction', self.direction)
+                pass
 
     def __del__(self):
         self.stop()

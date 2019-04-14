@@ -18,49 +18,65 @@ import numpy as np
 from picamera import PiCamera
 from picamera.array import PiRGBArray
 
-class VideoCamera(object):
-    def __init__(self):
-        # Using OpenCV to capture from device 0. If you have trouble capturing
-        # from a webcam, comment the line below out and use a video file
-        # instead.
-        # self.video = cv2.VideoCapture(0)
-        # If you decide to use video.mp4, you must have this file in the folder
-        # as the main.py.
-        # self.video = cv2.VideoCapture('video.mp4')
-        resolution = (320, 240)
-        camera = PiCamera(resolution=resolution)
-        rawCapture = PiRGBArray(camera, size=resolution)
-        self.video = camera.capture_continuous(rawCapture, format='bgr', use_video_port=True)
-        time.sleep(2)
+import io
+import threading
+import picamera
 
-    def __del__(self):
-        self.video.release()
 
-    def get_frame(self):        
-        for f in stream:
-            yield(f.array)
-            rawCapture.truncate(0)
-            time.sleep(0)
+class Camera(object):
+    thread = None  # background thread that reads frames from camera
+    frame = None  # current frame is stored here by background thread
+    last_access = 0  # time of last client access to the camera
 
-    def get_image(self):
-        frame = self.get_frame()
-        # frame = self.modify_frame(frame)
-        # print(type(frame))
-        if type(frame) == np.ndarray:
-            ret, jpeg = cv.imencode('.jpg', frame)
-            # print(jpeg.tobytes())
-            return jpeg.tobytes()
-        else:
-            # print('Huipizda!')
-            return b''
+    def initialize(self):
+        if Camera.thread is None:
+            # start background frame thread
+            Camera.thread = threading.Thread(target=self._thread)
+            Camera.thread.start()
 
-def gen():
-    camera = VideoCamera()
+            # wait until frames start to be available
+            while self.frame is None:
+                time.sleep(0)
 
+    def get_frame(self):
+        Camera.last_access = time.time()
+        self.initialize()
+        return self.frame
+
+    @classmethod
+    def _thread(cls):
+        with picamera.PiCamera() as camera:
+            # camera setup
+            camera.resolution = (320, 240)
+            camera.hflip = True
+            camera.vflip = True
+
+            # let camera warm up
+            camera.start_preview()
+            time.sleep(2)
+
+            stream = io.BytesIO()
+            for foo in camera.capture_continuous(stream, 'jpeg', use_video_port=True):
+                # store frame
+                stream.seek(0)
+                cls.frame = stream.read()
+
+                # reset stream for next frame
+                stream.seek(0)
+                stream.truncate()
+
+                # if there hasn't been any clients asking for frames in
+                # the last 10 seconds stop the thread
+                if time.time() - cls.last_access > 10:
+                    break
+
+        cls.thread = None
+
+def gen(camera):
     while True:
-        frame = camera.get_image()
+        frame = camera.get_frame()
         yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 
 # if not config.SEPARATE_STREAM_PROCESS:
@@ -69,5 +85,4 @@ def gen():
 #         # VS = VideoStream()
 #         # VS.start()
 #         # return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
-#         return Response(gen(),
-#                     mimetype='multipart/x-mixed-replace; boundary=frame')
+#         return Response(gen(Camera()), mimetype='multipart/x-mixed-replace; boundary=frame')

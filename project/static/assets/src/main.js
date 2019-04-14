@@ -16,37 +16,55 @@ var Header = {
 
 var Video = {
     template: '<div> \
-    <img src="http://192.168.1.123:5500/video_feed" class="img-fluid"> \
+    <img src="/video_feed" class="img-fluid"> \
     <!--<video id="videoPlayer" controls> \
         <source src="http://192.168.1.10:5500" type="video/mp4"> \
     </video>--> \
     </div>',
 }
 
-// var SliderX = {
-//     template: '',
-// }
+var SliderX = {
+    template: '<div></div>',
+}
 
-// var SliderY = {
-//     template: '<input id="servo_y" data-slider-id="servoSliderY" type="text" :data-slider-min="servo.yMin" :data-slider-max="servo.yMax" data-slider-step="1" data-slider-value="500" data-slider-orientation="vertical" />',
-//     data() {
-//         return {
-//             servo: {
-//                 yMin: 100,
-//                 yMax: 200,
-//             }
-//         }
-//     }
-// }
+var SliderY = {
+    template: '<div> \
+        <input type="integer" v-model="value" v-on:change="changeValue"> \
+    </div>',
+
+    data() {
+        return {
+            socket: null,
+            value: 50,
+        }
+    },
+
+    components: {
+        // 'vueSlider': window[ 'vue-slider-component' ],
+    },
+
+    created() {
+        this.socket = this.$store.getters.getSocket;
+    },
+
+    methods: {
+        changeValue: function() {
+            console.log('Y', this.value);
+            this.socket.emit('servo', {y: this.value});
+        }
+    }
+}
 
 var App = {
     template: '<div class="container"> \
         <Header /> \
         <div id="j_zone1" class="j_zone1 row text-center"> \
             <div class="col-1 text-left"> \
+                <SliderY /> \
             </div> \
             <div class="col-11"> \
                 <Video /> \
+                <SliderX /> \
             </div> \
         </div> \
         <div class="row"> \
@@ -75,11 +93,17 @@ var App = {
                 </div> \
             </div> \
     </div>',
-    components: { Header, Video },
+    components: { Header, Video, SliderY, SliderX },
 }
 
 new Vue({
     el: '#app',
+    store,
     components: { App },
     template: '<App />',
+
+    created: function() {
+        var socket = io.connect('http://' + document.domain + ':' + location.port + socketNamespace);
+        this.$store.dispatch('SET_SOCKET', socket);
+    }
 });

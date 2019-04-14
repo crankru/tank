@@ -6,11 +6,12 @@
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?{{ mtime }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap-slider/dist/css/bootstrap-slider.min.css') }}">
+        {# <!-- <link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap-slider/dist/css/bootstrap-slider.min.css') }}"> --> #}
+        <link ref="stylesheet" src="https://cdn.jsdelivr.net/npm/vue-slider-component@latest/theme/default.css">
 
     </head>
     <body>
-<!-- 
+    {# <!-- 
         <div class="container">
             <div class="row">
                 <div id="temperature" class="col-6">
@@ -71,26 +72,25 @@
                     </button><br>
                 </div>
             </div>
-        </div> -->
+        </div> --> #}
 
         <div id="app"></div>
 
         <script>var socketNamespace = '{{ socket_namespace }}';</script>
 
-        <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+        {# <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> --> #}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
+        {# <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> --> #}
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.2.0/js/all.js" integrity="sha384-4oV5EgaV02iISL2ban6c/RmotsABqE4yZxZLcYMAdG7FAPsyHYAPpywE9PJo+Khy" crossorigin="anonymous"></script>
 
-        <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/vuex@3.1.0/dist/vuex.js"></script>
 
         <script src="{{ url_for('static', filename='libs/nipplejs/dist/nipplejs.min.js') }}"></script>
-        <!-- <script src="{{ url_for('static', filename='libs/bootstrap-slider/dist/bootstrap-slider.min.js') }}"></script> -->
 
-        <script src="{{ url_for('static', filename='assets/src/main.js') }}?{{ mtime }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue-slider-component@latest/dist/vue-slider-component.umd.min.js"></script>
 
         <script src="{{ url_for('static', filename='js/camera_control.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='js/robot_control.js') }}?{{ mtime }}"></script>
@@ -98,5 +98,7 @@
         <script src="{{ url_for('static', filename='js/battery_control.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='js/temperature_control.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='js/main.js') }}?{{ mtime }}"></script>
+        <script src="{{ url_for('static', filename='assets/src/store/index.js') }}?{{ mtime }}"></script>
+        <script src="{{ url_for('static', filename='assets/src/main.js') }}?{{ mtime }}"></script>
     </body>
 </html>
