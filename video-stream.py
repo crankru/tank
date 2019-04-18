@@ -36,8 +36,8 @@ class Camera(object):
         with picamera.PiCamera() as camera:
             # camera setup
             camera.resolution = (320, 240)
-            camera.hflip = True
-            camera.vflip = True
+            # camera.hflip = True
+            # camera.vflip = True
 
             # let camera warm up
             camera.start_preview()
@@ -80,4 +80,4 @@ def video_feed():
 
 if __name__ == '__main__':
     # app.run(host='0.0.0.0', debug=config.DEBUG, threaded=True, port=config.SEPARATE_STREAM_PORT)
-    app.run(host='0.0.0.0', debug=True, port=5500)
+    app.run(host='0.0.0.0', debug=True, port=5500, threaded=True)

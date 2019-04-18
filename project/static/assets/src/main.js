@@ -15,10 +15,10 @@ var Header = {
 }
 
 var Video = {
-    template: '<div> \
-    <img src="/video_feed" class="img-fluid"> \
+    template: '<div style="min-height: 200px;"> \
+    <img src="http://192.168.1.123:5500/video_feed" class="img-fluid"> \
     <!--<video id="videoPlayer" controls> \
-        <source src="http://192.168.1.10:5500" type="video/mp4"> \
+        <source src="http://192.168.1.123:5500" type="video/mp4"> \
     </video>--> \
     </div>',
 }
@@ -85,6 +85,26 @@ var SliderY = {
     }
 }
 
+var ButtonsBar = {
+    template: '<div class="col-sm text-center"> \
+        <button id="btn-move-stop" type="button" class="btn btn-danger" title="Stop moving"> \
+            <i class="fas fa-stop-circle"></i> \
+        </button> \
+        <button id="btn-camera-stop" type="button" class="btn btn-primary" title="Camera on/off"> \
+            <i class="fas fa-video"></i> \
+        </button> \
+        <button id="btn-camera-photo" type="button" class="btn btn-primary" title="Take photo"> \
+            <i class="fas fa-camera"></i> \
+        </button> \
+        <button id="btn-camera-center" type="button" class="btn btn-primary" title="Camera to center"> \
+            <i class="fas fa-angle-down"></i> \
+        </button> \
+        <button id="btn-servo-stop" type="button" class="btn btn-danger" title="Stop servo"> \
+            <i class="fas fa-stop-circle"></i> \
+        </button> \
+    </div>',
+}
+
 var App = {
     template: '<div class="container"> \
         <Header /> \
@@ -97,6 +117,7 @@ var App = {
                 <SliderX /> \
             </div> \
         </div> \
+        <div class="row mb-3"><ButtonsBar /></div> \
         <div class="row"> \
                 <div class="col-sm"> \
                     <div id="j_zone2" class="j_zone2"> \
@@ -104,26 +125,9 @@ var App = {
                         <h1>Move control</h1> \
                     </div> \
                 </div> \
-                <div class="col-sm text-center"> \
-                    <button id="btn-move-stop" type="button" class="btn btn-danger" title="Stop moving"> \
-                        <i class="fas fa-stop-circle"></i> \
-                    </button><br> \
-                    <button id="btn-camera-stop" type="button" class="btn btn-primary" title="Camera on/off"> \
-                        <i class="fas fa-video"></i> \
-                    </button> \
-                    <button id="btn-camera-photo" type="button" class="btn btn-primary" title="Take photo"> \
-                        <i class="fas fa-camera"></i> \
-                    </button><br> \
-                    <button id="btn-camera-center" type="button" class="btn btn-primary" title="Camera to center"> \
-                        <i class="fas fa-angle-down"></i> \
-                    </button> \
-                    <button id="btn-servo-stop" type="button" class="btn btn-danger" title="Stop servo"> \
-                        <i class="fas fa-stop-circle"></i> \
-                    </button><br> \
-                </div> \
             </div> \
     </div>',
-    components: { Header, Video, SliderY, SliderX },
+    components: { Header, Video, SliderY, SliderX, ButtonsBar },
 }
 
 new Vue({
