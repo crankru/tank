@@ -6,73 +6,9 @@
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?{{ mtime }}">
-        {# <!-- <link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap-slider/dist/css/bootstrap-slider.min.css') }}"> --> #}
-        <link ref="stylesheet" src="https://cdn.jsdelivr.net/npm/vue-slider-component@latest/theme/default.css">
-
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/vue-slider.css') }}?{{ mtime }}">
     </head>
     <body>
-    {# <!-- 
-        <div class="container">
-            <div class="row">
-                <div id="temperature" class="col-6">
-                    <i class="fas fa-thermometer-empty fa-2x"></i>
-                    <span></span>
-                </div>
-                <div id="battery" class="text-right col-6">
-                    <span class="voltage"></span>
-                    <span class="fa-layers fa-fw fa-2x">
-                        <i class="fas fa-battery-full"></i>
-                        <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-12" style="font-weight:900"></span>
-                    </span>
-                </div>
-            </div>
-            <div id="j_zone1" class="j_zone1 row text-center">
-                <div class="col-1 text-left">
-                    <input id="servo_y" data-slider-id='servoSliderY' type="text" data-slider-min="{{ servo.yMin }}" data-slider-max="{{ servo.yMax }}" data-slider-step="1" data-slider-value="500" data-slider-orientation="vertical" />
-                </div>
-                <div class="col-11">
-                    {% if config.SEPARATE_STREAM_PROCESS %}
-                        <img src="http://{{ config.SEPARATE_STREAM_HOST }}:{{ config.SEPARATE_STREAM_PORT }}/video_feed" class="img-fluid">
-                    {% else %}
-                        <img src="" class="img-fluid">
-                    {% endif %}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm">
-                    <input id="servo_x" data-slider-id='servoSliderX' type="text" data-slider-min="{{ servo.xMin }}" data-slider-max="{{ servo.xMax }}" data-slider-step="1" data-slider-value="350"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm">
-                    <div id="j_zone2" class="j_zone2">
-                        <div id="div-xy" class="small"></div>
-                        <h1>Move control</h1>
-                    </div>
-                </div>
-                <div class="col-sm text-center">
-                    <button id="btn-move-stop" type="button" class="btn btn-danger" title="Stop moving">
-                        <i class="fas fa-stop-circle"></i>
-                    </button><br>
-
-                    <button id="btn-camera-stop" type="button" class="btn btn-primary" title="Camera on/off">
-                        <i class="fas fa-video"></i>
-                    </button> 
-
-                    <button id="btn-camera-photo" type="button" class="btn btn-primary" title="Take photo">
-                        <i class="fas fa-camera"></i>
-                    </button><br>
-
-                    <button id="btn-camera-center" type="button" class="btn btn-primary" title="Camera to center">
-                        <i class="fas fa-angle-down"></i>
-                    </button>
-
-                    <button id="btn-servo-stop" type="button" class="btn btn-danger" title="Stop servo">
-                        <i class="fas fa-stop-circle"></i>
-                    </button><br>
-                </div>
-            </div>
-        </div> --> #}
 
         <div id="app"></div>
 
@@ -86,6 +22,7 @@
         <script defer src="https://use.fontawesome.com/releases/v5.2.0/js/all.js" integrity="sha384-4oV5EgaV02iISL2ban6c/RmotsABqE4yZxZLcYMAdG7FAPsyHYAPpywE9PJo+Khy" crossorigin="anonymous"></script>
 
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <!-- <script src="https://unpkg.com/vue@2.5.2/dist/vue.min.js"></script> -->
         <script src="https://unpkg.com/vuex@3.1.0/dist/vuex.js"></script>
 
         <script src="{{ url_for('static', filename='libs/nipplejs/dist/nipplejs.min.js') }}"></script>
@@ -94,10 +31,11 @@
 
         <script src="{{ url_for('static', filename='js/camera_control.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='js/robot_control.js') }}?{{ mtime }}"></script>
-        <script src="{{ url_for('static', filename='js/servo_control.js') }}?{{ mtime }}"></script>
+        <!-- <script src="{{ url_for('static', filename='js/servo_control.js') }}?{{ mtime }}"></script> -->
         <script src="{{ url_for('static', filename='js/battery_control.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='js/temperature_control.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='js/main.js') }}?{{ mtime }}"></script>
+
         <script src="{{ url_for('static', filename='assets/src/store/index.js') }}?{{ mtime }}"></script>
         <script src="{{ url_for('static', filename='assets/src/main.js') }}?{{ mtime }}"></script>
     </body>

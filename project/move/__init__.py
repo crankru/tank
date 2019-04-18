@@ -61,11 +61,11 @@ def servo(message):
     action = message.get('action')
     x = int(message.get('x', 0))
     y = int(message.get('y', 0))
+    # print(x, y)
 
     if action ==  'stop':
         SC.stop()
     elif action == 'move':
-        print('x: {}; y: {}'.format(x, y))
         SC.move(x, y)
     elif action == 'center':
         SC.center()

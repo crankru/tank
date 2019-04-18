@@ -24,33 +24,63 @@ var Video = {
 }
 
 var SliderX = {
-    template: '<div></div>',
-}
-
-var SliderY = {
     template: '<div> \
-        <input type="integer" v-model="value" v-on:change="changeValue"> \
+        <vue-slider v-model="value" v-bind="options" v-on:change="change"></vue-slider> \
     </div>',
 
     data() {
         return {
-            socket: null,
-            value: 50,
+            value: 330,
+            options: {
+                min: 180,
+                max: 500,
+                tooltip: 'always',
+                direction: 'rtl',
+                marks: [180, 500],
+            }
         }
     },
 
     components: {
-        // 'vueSlider': window[ 'vue-slider-component' ],
-    },
-
-    created() {
-        this.socket = this.$store.getters.getSocket;
+        'vueSlider': window[ 'vue-slider-component' ],
     },
 
     methods: {
-        changeValue: function() {
-            console.log('Y', this.value);
-            this.socket.emit('servo', {y: this.value});
+        change: function(value) {
+            this.$store.commit('setServoX', value);
+            this.$store.dispatch('SERVO_MOVE');
+        }
+    }
+}
+
+var SliderY = {
+    template: '<div> \
+        <vue-slider v-model="value" v-bind="options" v-on:change="change"></vue-slider> \
+    </div>',
+
+    data() {
+        return {
+            value: 400,
+            options: {
+                min: 300,
+                max: 550,
+                tooltip: 'always',
+                height: 200,
+                width: 4,
+                direction: 'btt',
+                marks: [300, 550],
+            }
+        }
+    },
+
+    components: {
+        'vueSlider': window[ 'vue-slider-component' ],
+    },
+
+    methods: {
+        change: function(value) {
+            this.$store.commit('setServoY', value);
+            this.$store.dispatch('SERVO_MOVE');
         }
     }
 }
@@ -58,7 +88,7 @@ var SliderY = {
 var App = {
     template: '<div class="container"> \
         <Header /> \
-        <div id="j_zone1" class="j_zone1 row text-center"> \
+        <div id="j_zone1" class="j_zone1 row text-center p-3"> \
             <div class="col-1 text-left"> \
                 <SliderY /> \
             </div> \
