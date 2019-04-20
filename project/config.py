@@ -3,6 +3,8 @@ MOTOR_DRIVER = 'l298n'
 SECRET_KEY = 'sdf7s9d86f9BSFD879Sd76f9s8d76fm46mn45'
 SOCKET_NAMESPACE = '/robot'
 
+# SERVO_DRIVER_I2C = ''
+
 # video streaming in separate process
 SEPARATE_STREAM_PROCESS = False
 SEPARATE_STREAM_PORT = 5500

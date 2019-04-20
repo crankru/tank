@@ -15,12 +15,17 @@ import subprocess
 import atexit
 import os
 import re
+from flask_socketio import emit
 
 RM = RobotMove()
 SC = ServoControl()
 # BATTERY = BatteryControl()
 
 # app = create_app()
+
+@socketio.on('online', namespace=config.SOCKET_NAMESPACE)
+def online():
+    emit('online', {'online': True})
 
 @bp.route('/')
 def index():

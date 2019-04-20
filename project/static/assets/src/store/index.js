@@ -1,5 +1,6 @@
 const store = new Vuex.Store({
     state: {
+        online: false,
         socket: null,
         servo: {
             x: 0, 
@@ -8,6 +9,10 @@ const store = new Vuex.Store({
     },
 
     getters: {
+        getOnline(state) {
+            return  state.online;
+        },
+
         getSocket(state) {
             return state.socket;
         },
@@ -18,6 +23,10 @@ const store = new Vuex.Store({
     },
 
     mutations: {
+        setOnline(state, online) {
+            state.online = online;
+        },
+
         setSocket(state, socket) {
             state.socket = socket;
         },
@@ -32,6 +41,11 @@ const store = new Vuex.Store({
     },
 
     actions: {
+        UPDATE_ONLINE(state) {
+            var socket = state.getters.getSocket;
+            socket.emit('online');
+        },
+
         SET_SOCKET(context, socket) {
             context.commit('setSocket', socket);
         },
@@ -45,6 +59,6 @@ const store = new Vuex.Store({
             } else {
                 console.log('Socket undefined');
             }
-        }
+        },
     }
 });

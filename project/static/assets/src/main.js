@@ -1,3 +1,35 @@
+var OnlineIcon = {
+    // template: '<span> \
+    //     <i v-if="online" class="fas fa-wifi fa-2x" style="color: green"></i> \
+    //     <i v-else class="fas fa-wifi fa-2x" style="color: red"></i> \
+    // </span>',
+
+    template: '<span> \
+        <span v-if="online">online</span> \
+        <span v-else>offline</span> \
+    </span>',
+
+    created: function() {
+        var socket = this.$store.getters.getSocket;
+        var _this = this;
+        this.$store.dispatch('UPDATE_ONLINE');
+
+        setInterval(function() {
+            _this.$store.dispatch('UPDATE_ONLINE');
+        }, 1000);
+
+        socket.on('online', function(data) {
+            _this.$store.commit('setOnline', data.online);
+        });
+    },
+
+    computed: {
+        online: function() {
+            return this.$store.getters.getOnline;
+        },
+    },
+}
+
 var Header = {
     template: '<div class="row bg-secondary p-2"> \
             <div id="temperature" class="col-6"> \
@@ -6,12 +38,15 @@ var Header = {
             </div> \
             <div id="battery" class="text-right col-6"> \
                 <span class="voltage"></span> \
+                <OnlineIcon /> \
                 <span class="fa-layers fa-fw fa-2x"> \
                     <i class="fas fa-battery-full"></i> \
                     <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-12" style="font-weight:900"></span> \
                 </span> \
             </div> \
-        </div>'
+        </div>',
+
+    components: { OnlineIcon }
 }
 
 var Video = {
