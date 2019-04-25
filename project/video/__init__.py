@@ -1,21 +1,19 @@
 from flask import Blueprint
 bp = Blueprint('video', __name__)
 
-from flask import render_template, Response, request
+from flask import Response, request
 
 # from project import create_app, config
 from project import config, socketio
-from project.video.video import VideoStream
+# from project.video.video import VideoStream
 
 import time
-import subprocess
-import atexit
 import os
-import re
+# import re
 
 import cv2
 import numpy as np
-from picamera import PiCamera
+# from picamera import PiCamera
 from picamera.array import PiRGBArray
 
 import io
@@ -28,30 +26,31 @@ class Camera(object):
     frame = None  # current frame is stored here by background thread
     last_access = 0  # time of last client access to the camera
 
-    def initialize(self):
+    def __init__(self):
         if Camera.thread is None:
-            # start background frame thread
             Camera.thread = threading.Thread(target=self._thread)
             Camera.thread.start()
 
             # wait until frames start to be available
-            while self.frame is None:
-                time.sleep(0)
+            # while self.frame is None:
+            #     time.sleep(0)
 
     def get_frame(self):
         Camera.last_access = time.time()
-        self.initialize()
-        return self.frame
+        # self.initialize()
+        # fh = open('tmp/test.jpg', 'rb')
+        # self.frame = fh.read()
+        # fh.close()
+        if self.frame:
+            return self.frame
+        else:
+            return b''
 
     @classmethod
     def _thread(cls):
         with picamera.PiCamera() as camera:
-            # camera setup
             camera.resolution = (320, 240)
-            camera.hflip = True
-            camera.vflip = True
 
-            # let camera warm up
             camera.start_preview()
             time.sleep(2)
 
@@ -72,17 +71,23 @@ class Camera(object):
 
         cls.thread = None
 
+
+@bp.before_app_first_request 
+def init():
+    CAMERA = Camera()
+    print('Init func')
+
 def gen(camera):
     while True:
-        frame = camera.get_frame()
         yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+               b'Content-Type: image/jpeg\r\n\r\n' + camera.get_frame() + b'\r\n')
 
 
-# if not config.SEPARATE_STREAM_PROCESS:
-#     @bp.route('/video_feed')
-#     def video_feed():
-#         # VS = VideoStream()
-#         # VS.start()
-#         # return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
-#         return Response(gen(Camera()), mimetype='multipart/x-mixed-replace; boundary=frame')
+if not config.SEPARATE_STREAM_PROCESS:
+    @bp.route('/video_feed')
+    def video_feed():
+        # VS = VideoStream()
+        # VS.start()
+        # return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
+        # return Response(gen(Camera()), mimetype='multipart/x-mixed-replace; boundary=frame')
+        return Response(gen(CAMERA), mimetype='multipart/x-mixed-replace; boundary=frame')
