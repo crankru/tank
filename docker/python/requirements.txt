@@ -32,12 +32,18 @@ markupsafe==1.1.1
     # via jinja2
 mock==4.0.3
     # via pi-ina219
+numpy==1.20.1
+    # via -r requirements.in
 pi-ina219==1.4.0
+    # via -r requirements.in
+picamera==1.13
     # via -r requirements.in
 python-engineio==4.0.1
     # via python-socketio
 python-socketio==5.1.0
     # via flask-socketio
+rpi.gpio==0.7.0
+    # via -r requirements.in
 six==1.15.0
     # via eventlet
 smbus2==0.4.1

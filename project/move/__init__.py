@@ -9,7 +9,7 @@ from project import socketio, config
 from project.move.move import RobotMove
 from project.servo import ServoControl
 from project.battery import BatteryControl
-from project.video.video import VideoStream
+# from project.video.video import VideoStream
 
 import time
 import subprocess

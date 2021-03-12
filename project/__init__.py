@@ -24,10 +24,10 @@ def create_app():
 
     import project.client
     import project.move
-    import project.video
+    # import project.video
     app.register_blueprint(client.bp)
     app.register_blueprint(move.bp)
-    app.register_blueprint(video.bp)
+    # app.register_blueprint(video.bp)
 
     socketio.init_app(app)
     return app

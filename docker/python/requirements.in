@@ -1,9 +1,14 @@
 flask
 uwsgi
+numpy
+picamera
 
 # i2c
 smbus2
 pi-ina219
+
+# GPIO
+RPi.GPIO
 
 # websocket
 flask-socketio
