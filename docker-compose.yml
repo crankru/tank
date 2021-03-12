@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  app:
+    build: ./docker/python/
+    # restart: until-stoped
+    command: python run.py
+    volumes: 
+      - .:/code
+      - /dev/i2c/1:/dev/i2c/1:z
+    ports: 
+      - 5000:5000
