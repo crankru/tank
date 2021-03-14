@@ -5,9 +5,9 @@ from flask import render_template, Response, request
 
 # from project import create_app, config
 from project import config, socketio
-from project.move.move import RobotMove
-from project.servo import ServoControl
-from project.battery import BatteryControl
+# from project.move.move import RobotMove
+# from project.servo import ServoControl
+# from project.battery import BatteryControl
 # from project.video.video import VideoStream
 
 import time
@@ -17,7 +17,7 @@ import os
 import re
 from flask_socketio import emit
 
-RM = RobotMove()
+# RM = RobotMove()
 # SC = ServoControl()
 # BATTERY = BatteryControl()
 
