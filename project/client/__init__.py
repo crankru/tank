@@ -18,7 +18,7 @@ import re
 from flask_socketio import emit
 
 RM = RobotMove()
-SC = ServoControl()
+# SC = ServoControl()
 # BATTERY = BatteryControl()
 
 # app = create_app()
@@ -35,7 +35,7 @@ def index():
     #     # print('cam status', cam_status)
     #     socketio.emit('camera', {'status': cam_status}, namespace=config.SOCKET_NAMESPACE)
 
-    servo = {
+    servo_pos = {
         'yMin': 300,
         'yMax': 550,
         'xMin': 150,
@@ -46,5 +46,5 @@ def index():
         'index.html', 
         mtime=time.time(), 
         socket_namespace=config.SOCKET_NAMESPACE,
-        servo=servo
+        servo=servo_pos
     )

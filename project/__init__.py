@@ -23,10 +23,12 @@ def create_app():
     app.config.from_object(config)
 
     import project.client
-    import project.move
-    # import project.video
     app.register_blueprint(client.bp)
+
+    import project.move
     app.register_blueprint(move.bp)
+    
+    # import project.video
     # app.register_blueprint(video.bp)
 
     socketio.init_app(app)

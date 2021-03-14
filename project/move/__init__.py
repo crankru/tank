@@ -18,7 +18,7 @@ import os
 import re
 
 RM = RobotMove()
-SC = ServoControl()
+# SC = ServoControl()
 # BATTERY = BatteryControl()
 
 # app = create_app()

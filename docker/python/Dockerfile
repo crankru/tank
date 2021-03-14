@@ -5,3 +5,5 @@ ADD requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
 
 WORKDIR /code
+
+ENV PYTHONUNBUFFERED 1
