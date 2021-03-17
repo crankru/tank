@@ -6,6 +6,7 @@ from flask_socketio import emit
 
 from project import socketio, config
 # from project import create_app, socketio, config
+from project import socketio
 from project.move.move import RobotMove
 from project.servo import ServoControl
 from project.battery import BatteryControl

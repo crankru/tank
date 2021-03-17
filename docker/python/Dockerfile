@@ -6,4 +6,4 @@ RUN pip install -r /requirements.txt
 
 WORKDIR /code
 
-ENV PYTHONUNBUFFERED 1
+ENV DOCKER=1 PYTHONUNBUFFERED=1 DEBIAN_FRONTEND=noninteractive 
