@@ -5,6 +5,9 @@ services:
     build: ./docker/python/
     restart: unless-stopped
     command: python run.py
+    privileged: true
+    environment: 
+      - TZ=Europe/Moscow
     volumes: 
       - .:/code
       # - /dev/i2c-1:/dev/i2c-1

@@ -5,22 +5,12 @@
 - [Список и стоимость деталей](https://docs.google.com/spreadsheets/d/1Ukt3rJ1fKwBE6TXDDFmFCdl11GmUvG5iqSfO8u2NnJY/edit?usp=sharing)
 
 
+# Установка
+- Установите Docker
+- ```git clone```
+
 # Запуск
-Запуск сервера управления
-```
-python run.py
-```
-
-## Отдельный процесс трансляции видео
-Для запуска видео стрима отдельным процессом нужно прописать `SEPARATE_STREAM_PROCESS = True` в файле настроек [config.py](./project/config.py), а затем выполнить:
-```
-python video-stream.py
-```
-
-Для запуска сервера управления и трансляции видео в отдельных процессах выполните 
-```
-start.py
-``` 
+- ```docker-compose up app```
 
 
 ## TODO

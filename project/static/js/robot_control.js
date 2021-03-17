@@ -1,5 +1,4 @@
-class RobotControl 
-{
+class RobotControl {
     constructor(socket) {
         this.socket = socket;
 
@@ -18,15 +17,15 @@ class RobotControl
     bindEvents() {
         var $this = this;
 
-        $('#btn-move-stop').on('click', function() {
+        $('#btn-move-stop').on('click', function () {
             $this.stop();
         });
     }
 
     listenEvents() {
-        this.socket.on('move', function(msg) {
+        this.socket.on('move', function (msg) {
             // console.log(msg);
-            if(msg.params) {
+            if (msg.params) {
                 document.getElementById('div-xy').innerHTML = 'X: ' + msg.params.x + ' Y: ' + msg.params.y;
             }
         });
@@ -47,7 +46,7 @@ class RobotControl
         // TODO set update delay
         // if(this.dataSend == true) {
         //     var $this = this;
-            
+
         //     setTimeout(function() {
         //        $this.resetDataFlag();
         //     }, this.repeatTimeout);
@@ -60,7 +59,7 @@ class RobotControl
     }
 
     resetDataFlag() {
-        if(this.dataSend == true) {
+        if (this.dataSend == true) {
             this.dataSend = false;
             this.sendXY();
         }
@@ -74,7 +73,7 @@ class RobotControl
         // console.log(nipple);
         // console.log(nipple.angle, Math.sin(nipple.angle.radian), Math.cos(nipple.angle.radian));
 
-        if(x == this.x && y == this.y) {
+        if (x == this.x && y == this.y) {
             return;
         } else {
             // console.log(x, y);
@@ -90,7 +89,7 @@ class RobotControl
 
     stop() {
         // $.getJSON('/action', {action: 'stop'}, function(res) {});
-        this.socket.emit('move', {action: 'stop'});
+        this.socket.emit('move', { action: 'stop' });
         // console.log('STOP');
     }
 }

@@ -5,6 +5,17 @@ from flask import Blueprint
 
 from project import config
 
+# if config.INIT_MOVE:
+#     from project.move.move import RobotMove
+
+# if config.INIT_SERVO:
+#     from project.servo import ServoControl
+
+# from project.battery import BatteryControl
+
+# if config.INIT_VIDEO:
+#     from project.video.video import VideoStream
+
 if not config.SEPARATE_STREAM_PROCESS:
     import eventlet
     eventlet.monkey_patch()
@@ -25,11 +36,13 @@ def create_app():
     import project.client
     app.register_blueprint(client.bp)
 
-    import project.move
-    app.register_blueprint(move.bp)
+    if app.config['INIT_MOVE']:
+        import project.move
+        app.register_blueprint(move.bp)
     
-    # import project.video
-    # app.register_blueprint(video.bp)
+    if app.config['INIT_VIDEO']:
+        import project.video
+        app.register_blueprint(video.bp)
 
     socketio.init_app(app)
     return app
