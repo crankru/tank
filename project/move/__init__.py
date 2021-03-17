@@ -100,6 +100,10 @@ def camera(message):
 
 @socketio.on('temperature', namespace=config.SOCKET_NAMESPACE)
 def temperature(message):
+    # from vcgencmd import Vcgencmd
+    # vcgm = Vcgencmd()
+    # print(vcgm.measure_temp())
+    # tmp = os.popen("vcgencmd measure_temp").readline()
     tmp = os.popen("vcgencmd measure_temp").readline()
     r = re.search(r'temp=([0-9\.]+)', tmp)
     
