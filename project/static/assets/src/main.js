@@ -148,7 +148,7 @@ var App = {
                 <SliderY /> \
             </div> \
             <div class="col-11"> \
-                <Video /> \
+                <!-- <Video /> --> \
                 <SliderX /> \
             </div> \
         </div> \

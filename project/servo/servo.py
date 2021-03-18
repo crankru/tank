@@ -4,9 +4,9 @@ from drivers.Raspi_PWM_Servo_Driver import PWM
 import time
 
 class ServoControl:
-    def __init__(self):
+    def __init__(self, address=0x70):
         # self.pwm = PWM(0x6F)
-        self.pwm = PWM(0x70)
+        self.pwm = PWM(address)
         self.pwm.setPWMFreq(50) # 60
 
         self.x = self.centerX = 350 #400

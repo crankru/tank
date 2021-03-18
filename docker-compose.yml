@@ -10,10 +10,9 @@ services:
       - TZ=Europe/Moscow
     volumes: 
       - .:/code
-      # - /dev/i2c-1:/dev/i2c-1
       - /var/run/docker.sock:/var/run/docker.sock
-    devices:  
-      - /dev/i2c-1:/dev/i2c-1
-      - /dev/gpiomem:/dev/gpiomem
+    # devices:  
+    #   - /dev/i2c-1:/dev/i2c-1
+    #   - /dev/gpiomem:/dev/gpiomem
     ports: 
       - 5000:5000
