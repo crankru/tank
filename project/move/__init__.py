@@ -49,22 +49,6 @@ def move(message):
 
     emit('move', {'res': True, 'data': 'OK', 'params': {'x': x, 'y': y}})
 
-@socketio.on('camera', namespace=config.SOCKET_NAMESPACE)
-def camera(message):
-    print('camera msg: ', message)
-
-    if message.get('action') == 'take_photo':
-        VS.take_photo()
-    elif message.get('active') == True:
-        print('Start video stream')
-        VS.start()
-    else:
-        print('Stop video stream')
-        VS.stop()
-
-    status = VS.get_status()
-    emit('camera', {'res': True, 'status': status})
-
 @socketio.on('temperature', namespace=config.SOCKET_NAMESPACE)
 def temperature(message):
     tmp = os.popen("vcgencmd measure_temp").readline()

@@ -3,7 +3,6 @@ bp = Blueprint('video', __name__)
 
 from flask import Response, request
 
-# from project import create_app, config
 from project import config, socketio
 # from project.video.video import VideoStream
 
@@ -91,3 +90,19 @@ class Camera(object):
 #         # return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
 #         # return Response(gen(Camera()), mimetype='multipart/x-mixed-replace; boundary=frame')
 #         return Response(gen(CAMERA), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+# @socketio.on('camera', namespace=config.SOCKET_NAMESPACE)
+# def camera(message):
+#     print('camera msg: ', message)
+
+#     if message.get('action') == 'take_photo':
+#         VS.take_photo()
+#     elif message.get('active') == True:
+#         print('Start video stream')
+#         VS.start()
+#     else:
+#         print('Stop video stream')
+#         VS.stop()
+
+#     status = VS.get_status()
+#     emit('camera', {'res': True, 'status': status})

@@ -1,6 +1,6 @@
 flask
 # uwsgi
-# numpy
+numpy
 picamera
 
 # i2c
