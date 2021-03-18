@@ -71,15 +71,24 @@ class Camera(object):
         cls.thread = None
 
 
-# @bp.before_app_first_request 
-# def init():
-#     CAMERA = Camera()
-#     print('Init func')
+@bp.before_app_first_request 
+def init():
+    global CAMERA
+    CAMERA = Camera()
+    print('Init func')
 
-# def gen(camera):
-#     while True:
-#         yield (b'--frame\r\n'
-#                b'Content-Type: image/jpeg\r\n\r\n' + camera.get_frame() + b'\r\n')
+def gen(camera):
+    while True:
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + camera.get_frame() + b'\r\n')
+
+@bp.route('/video_feed')
+def video_feed():
+    # VS = VideoStream()
+    # VS.start()
+    # return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    # return Response(gen(Camera()), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(gen(CAMERA), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 # if not config.SEPARATE_STREAM_PROCESS:
