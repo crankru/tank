@@ -1,7 +1,5 @@
 flask
 # uwsgi
-numpy
-picamera
 
 # i2c
 smbus2
@@ -13,6 +11,11 @@ RPi.GPIO
 # websocket
 flask-socketio
 eventlet
+
+# video
+numpy
+picamera
+opencv-python
 
 # CPU temperature
 # vcgencmd

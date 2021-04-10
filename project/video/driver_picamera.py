@@ -17,6 +17,7 @@ class Camera(BaseCamera):
         except Exception:
             print('Camera initialization error')
             return False
+            
         else:
             rawCapture = PiRGBArray(camera, size=resolution)
             stream = camera.capture_continuous(rawCapture, format='bgr', use_video_port=True)

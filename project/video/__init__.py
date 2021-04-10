@@ -79,9 +79,11 @@ def init():
 
 def gen(camera):
     while True:
+        time.sleep(0)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + camera.get_frame() + b'\r\n')
 
+# if not config.SEPARATE_STREAM_PROCESS:
 @bp.route('/video_feed')
 def video_feed():
     # VS = VideoStream()
@@ -89,16 +91,6 @@ def video_feed():
     # return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
     # return Response(gen(Camera()), mimetype='multipart/x-mixed-replace; boundary=frame')
     return Response(gen(CAMERA), mimetype='multipart/x-mixed-replace; boundary=frame')
-
-
-# if not config.SEPARATE_STREAM_PROCESS:
-#     @bp.route('/video_feed')
-#     def video_feed():
-#         # VS = VideoStream()
-#         # VS.start()
-#         # return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
-#         # return Response(gen(Camera()), mimetype='multipart/x-mixed-replace; boundary=frame')
-#         return Response(gen(CAMERA), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 # @socketio.on('camera', namespace=config.SOCKET_NAMESPACE)
 # def camera(message):
