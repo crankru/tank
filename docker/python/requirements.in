@@ -14,8 +14,10 @@ eventlet
 
 # video
 numpy
-picamera
-opencv-python
+# picamera
+# opencv-python
+# opencv-contrib-python
+imutils
 
 # CPU temperature
 # vcgencmd

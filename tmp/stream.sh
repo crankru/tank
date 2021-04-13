@@ -1,3 +1,0 @@
-# gst-launch-1.0 -v v4l2src ! "image/jpeg,width=160,height=120,framerate=30/1" ! rtpjpegpay ! udpsink host=192.168.2.3 port=5500
-raspivid -fps 26 -h 240 -w 320 -vf -n -t 0 -b 200000 -o - | gst-launch-1.0 -v fdsrc ! h264parse ! rtph264pay config-interval=1 pt=96! gdppay ! tcpserversink host=192.168.1.123 port=5500
-# gst-launch-1.0 v4l2src device=/dev/video0 ! 'image/jpeg,width=320,height=240, framerate=30/1' ! rtpjpegpay ! udpsink host=192.168.1.123 port=5500 sync=false
