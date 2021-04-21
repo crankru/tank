@@ -13,8 +13,8 @@ flask-socketio
 eventlet
 
 # video
-numpy
-# picamera
+# numpy
+picamera
 # opencv-python
 # opencv-contrib-python
 imutils
