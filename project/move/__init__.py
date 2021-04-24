@@ -5,6 +5,8 @@ from flask import render_template, Response, jsonify, request
 from flask_socketio import emit
 
 from project import socketio, config
+# from project import create_app, socketio, config
+from project import socketio
 from project.move.move import RobotMove
 # from project.video.video import VideoStream
 
@@ -51,6 +53,10 @@ def move(message):
 
 @socketio.on('temperature', namespace=config.SOCKET_NAMESPACE)
 def temperature(message):
+    # from vcgencmd import Vcgencmd
+    # vcgm = Vcgencmd()
+    # print(vcgm.measure_temp())
+    # tmp = os.popen("vcgencmd measure_temp").readline()
     tmp = os.popen("vcgencmd measure_temp").readline()
     r = re.search(r'temp=([0-9\.]+)', tmp)
     

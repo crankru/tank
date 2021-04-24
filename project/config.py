@@ -13,6 +13,10 @@ INIT_VIDEO = False
 INIT_BATTERY = False
 INA219_ADDR = 0x40
 
+INIT_MOVE = True
+INIT_SERVO = False
+INIT_VIDEO = False
+
 # video streaming in separate process
 SEPARATE_STREAM_PROCESS = False
 SEPARATE_STREAM_PORT = 5500

@@ -2,6 +2,5 @@
 __pycache__
 /tmp
 /project/static/libs/nipplejs
-/code
-
 *.jpg
+/code
