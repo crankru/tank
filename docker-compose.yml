@@ -10,10 +10,31 @@ services:
       - TZ=Europe/Moscow
     volumes: 
       - .:/code
-      # - /dev/i2c-1:/dev/i2c-1
       - /var/run/docker.sock:/var/run/docker.sock
-    devices:  
-      - /dev/i2c-1:/dev/i2c-1
-      - /dev/gpiomem:/dev/gpiomem
+    # devices:  
+    #   - /dev/i2c-1:/dev/i2c-1
+    #   - /dev/gpiomem:/dev/gpiomem
     ports: 
       - 5000:5000
+      # - 5500:5500
+
+  video:
+    build: ./docker/python/
+    restart: unless-stopped
+    # command: python video-stream.py
+    command: python test.py
+    privileged: true
+    environment: 
+      - TZ=Europe/Moscow
+    volumes: 
+      - .:/code
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports: 
+      - 5500:5500
+
+  pip-compile:
+    build: ./docker/python
+    restart: 'no'
+    command: pip-compile --generate-hashes --reuse-hashes --verbose docker/python/requirements.in
+    volumes: 
+      - .:/code

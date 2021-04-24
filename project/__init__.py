@@ -39,10 +39,18 @@ def create_app():
     if app.config['INIT_MOVE']:
         import project.move
         app.register_blueprint(move.bp)
+
+    if app.config['INIT_SERVO']:
+        import project.servo
+        app.register_blueprint(servo.bp)
     
     if app.config['INIT_VIDEO']:
         import project.video
         app.register_blueprint(video.bp)
+
+    if app.config['INIT_BATTERY']:
+        import project.battery
+        app.register_blueprint(battery.bp)
 
     socketio.init_app(app)
     return app

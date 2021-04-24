@@ -51,7 +51,7 @@ var Header = {
 
 var Video = {
     template: '<div style="min-height: 200px;"> \
-    <img src="http://192.168.1.123:5000/video_feed" class="img-fluid"> \
+    <img src="/video_feed" class="img-fluid"> \
     <!--<video id="videoPlayer" controls> \
         <source src="http://192.168.1.123:5500" type="video/mp4"> \
     </video>--> \

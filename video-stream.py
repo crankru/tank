@@ -1,7 +1,7 @@
 from flask import Flask, Response
 
 # from project import config
-# # from project.video.video import VideoStream
+# from project.video.video import VideoStream
 import time
 
 app = Flask(__name__)

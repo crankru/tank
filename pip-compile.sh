@@ -1,0 +1,1 @@
+docker-compose run --rm app pip-compile --generate-hashes --reuse-hashes --verbose docker/python/requirements.in

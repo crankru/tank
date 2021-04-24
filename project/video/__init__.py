@@ -3,7 +3,6 @@ bp = Blueprint('video', __name__)
 
 from flask import Response, request
 
-# from project import create_app, config
 from project import config, socketio
 # from project.video.video import VideoStream
 
@@ -72,22 +71,39 @@ class Camera(object):
         cls.thread = None
 
 
-# @bp.before_app_first_request 
-# def init():
-#     CAMERA = Camera()
-#     print('Init func')
+@bp.before_app_first_request 
+def init():
+    global CAMERA
+    CAMERA = Camera()
+    print('Init func')
 
-# def gen(camera):
-#     while True:
-#         yield (b'--frame\r\n'
-#                b'Content-Type: image/jpeg\r\n\r\n' + camera.get_frame() + b'\r\n')
-
+def gen(camera):
+    while True:
+        time.sleep(0)
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + camera.get_frame() + b'\r\n')
 
 # if not config.SEPARATE_STREAM_PROCESS:
-#     @bp.route('/video_feed')
-#     def video_feed():
-#         # VS = VideoStream()
-#         # VS.start()
-#         # return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
-#         # return Response(gen(Camera()), mimetype='multipart/x-mixed-replace; boundary=frame')
-#         return Response(gen(CAMERA), mimetype='multipart/x-mixed-replace; boundary=frame')
+@bp.route('/video_feed')
+def video_feed():
+    # VS = VideoStream()
+    # VS.start()
+    # return Response(VS.get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    # return Response(gen(Camera()), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(gen(CAMERA), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+# @socketio.on('camera', namespace=config.SOCKET_NAMESPACE)
+# def camera(message):
+#     print('camera msg: ', message)
+
+#     if message.get('action') == 'take_photo':
+#         VS.take_photo()
+#     elif message.get('active') == True:
+#         print('Start video stream')
+#         VS.start()
+#     else:
+#         print('Stop video stream')
+#         VS.stop()
+
+#     status = VS.get_status()
+#     emit('camera', {'res': True, 'status': status})

@@ -1,10 +1,10 @@
-from ina219 import INA219
-from ina219 import DeviceRangeError
+# from ina219 import INA219, DeviceRangeError
+# from project import config
 
 class BatteryControl:
-    def __init__(self):
+    def __init__(self, address=None):
         SHUNT_OHMS = 0.1
-        self.ina = INA219(SHUNT_OHMS)
+        self.ina = INA219(SHUNT_OHMS, address=address)
         self.ina.configure()
 
         self.voltage = None #Bus coltage V
@@ -40,8 +40,26 @@ class BatteryControl:
             print(e)
 
 if __name__== '__main__':
-    bc = BatteryControl()
+    bc = BatteryControl(0x40)
     bc.print()
+
+    # import board
+    # from adafruit_ina219 import ADCResolution, BusVoltageRange, INA219
+    
+    # i2c_bus = board.I2C()
+    # print(i2c_bus.__dict__)
+    # ina219 = INA219(i2c_bus)
+    
+    # print("ina219 test")
+    
+    # # display some of the advanced field (just to test)
+    # print("Config register:")
+    # print("  bus_voltage_range:    0x%1X" % ina219.bus_voltage_range)
+    # print("  gain:                 0x%1X" % ina219.gain)
+    # print("  bus_adc_resolution:   0x%1X" % ina219.bus_adc_resolution)
+    # print("  shunt_adc_resolution: 0x%1X" % ina219.shunt_adc_resolution)
+    # print("  mode:                 0x%1X" % ina219.mode)
+    # print("")
 
 
 # import serial
