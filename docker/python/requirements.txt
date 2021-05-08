@@ -22,19 +22,19 @@ dnspython==1.16.0 \
     --hash=sha256:36c5e8e38d4369a08b6780b7f27d790a292b2b08eea01607865bf0936c558e01 \
     --hash=sha256:f69c21288a962f4da86e56c4905b49d11aba7938d3d740e80d9e366ee4f1632d
     # via eventlet
-eventlet==0.30.2 \
-    --hash=sha256:1811b122d9a45eb5bafba092d36911bca825f835cb648a862bbf984030acff9d \
-    --hash=sha256:89cc6dbfef47c4629cefead5fde21c5f2b33464d57f7df5fc5148f8b4de3fbb5
-    # via -r docker/python/requirements.in
+eventlet==0.31.0 \
+    --hash=sha256:27ae41fad9deed9bbf4166f3e3b65acc15d524d42210a518e5877da85a6b8c5d \
+    --hash=sha256:b36ec2ecc003de87fc87b93197d77fea528aa0f9204a34fdf3b2f8d0f01e017b
+    # via -r requirements.in
 flask-socketio==5.0.1 \
     --hash=sha256:5c4319f5214ada20807857dc8fdf3dc7d2afe8d6dd38f5c516c72e2be47d2227 \
     --hash=sha256:5d9a4438bafd806c5a3b832e74b69758781a8ee26fb6c9b1dbdda9b4fced432e
-    # via -r docker/python/requirements.in
+    # via -r requirements.in
 flask==1.1.2 \
     --hash=sha256:4efa1ae2d7c9865af48986de8aeb8504bf32c7f3d6fdc9353d34b21f4b127060 \
     --hash=sha256:8a4fdd8936eba2512e9c85df320a37e694c93945b33ef33c89946a340a238557
     # via
-    #   -r docker/python/requirements.in
+    #   -r requirements.in
     #   flask-socketio
 greenlet==1.0.0 \
     --hash=sha256:0a77691f0080c9da8dfc81e23f4e3cffa5accf0f5b56478951016d7cfead9196 \
@@ -81,6 +81,9 @@ greenlet==1.0.0 \
     --hash=sha256:f8450d5ef759dbe59f84f2c9f77491bb3d3c44bc1a573746daf086e70b14c243 \
     --hash=sha256:f97d83049715fd9dec7911860ecf0e17b48d8725de01e45de07d8ac0bd5bc378
     # via eventlet
+imutils==0.5.4 \
+    --hash=sha256:03827a9fca8b5c540305c0844a62591cf35a0caec199cb0f2f0a4a0fb15d8f24
+    # via -r requirements.in
 itsdangerous==1.1.0 \
     --hash=sha256:321b033d07f2a4136d3ec762eac9f16a10ccd60f53c0c91af90217ace7ba1f19 \
     --hash=sha256:b12271b2047cb23eeb98c8b5622e2e5c5e9abd9784a153e9d8ef9cb4dd09d749
@@ -147,6 +150,15 @@ mock==4.0.3 \
     --hash=sha256:122fcb64ee37cfad5b3f48d7a7d51875d7031aaf3d8be7c42e2bee25044eee62 \
     --hash=sha256:7d3fbbde18228f4ff2f1f119a45cdffa458b4c0dee32eb4d2bb2f82554bac7bc
     # via pi-ina219
+pi-ina219==1.4.0 \
+    --hash=sha256:29524cc308c56a5c483f551187923d3e167f2d39a29dc64c731ba7a8e04d022b
+    # via -r requirements.in
+picamera==1.13 \
+    --hash=sha256:890815aa01e4d855a6a95dd3ad0953b872a6b954982106407df0c5a31a163e50
+    # via -r requirements.in
+python-engineio==4.1.0 \
+    --hash=sha256:21e1bcc62f5573a4bb1c805e69915c5a4c5aa953005dde6c2f707c24554c1020 \
+    --hash=sha256:c0216b0f9584d6dd632dfd4e2b624d2cf5e97a55443a467f52b928b7e3e08998
     # via python-socketio
 python-socketio==5.1.0 \
     --hash=sha256:338cc29abb6f3ca14c88f1f8d05ed27c690df4648f62062b299f92625bbf7093 \
@@ -154,7 +166,7 @@ python-socketio==5.1.0 \
     # via flask-socketio
 rpi.gpio==0.7.0 \
     --hash=sha256:7424bc6c205466764f30f666c18187a0824077daf20b295c42f08aea2cb87d3f
-    # via -r docker/python/requirements.in
+    # via -r requirements.in
 six==1.15.0 \
     --hash=sha256:30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259 \
     --hash=sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced
@@ -162,8 +174,11 @@ six==1.15.0 \
 smbus2==0.4.1 \
     --hash=sha256:6276eb599b76c4e74372f2582d2282f03b4398f0da16bc996608e4f21557ca9b \
     --hash=sha256:8b1e70cda011b6fb3caf8377a1084f73a5aa99392b78529f140b0a3f06468f6c
-    # via -r docker/python/requirements.in
+    # via -r requirements.in
 spidev==3.5 \
     --hash=sha256:8a7f5c289f161ea2ac4697fa8a10918232c990678dd0053084b3c43b1363910d
     # via adafruit-gpio
+werkzeug==1.0.1 \
+    --hash=sha256:2de2a5db0baeae7b2d2664949077c2ac63fbd16d98da0ff71837f7d1dea3fd43 \
+    --hash=sha256:6c80b1e5ad3665290ea39320b91e1be1e0d5f60652b964a3070216de83d2e47c
     # via flask
